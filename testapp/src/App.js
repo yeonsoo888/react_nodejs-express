@@ -1,23 +1,34 @@
+import {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 
 function App() {
+  const [post,setPost] = useState([])
+
+  useEffect(() => {
+    axios.get('/list')
+    .then((Response)=>{
+      console.log(Response.data)
+      setPost(Response.data);
+    })
+    .catch((Error)=>{console.log(Error)})
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul>
+        {
+          post.map((item,i) => {
+            return (
+              <li>
+                <h4>{item.title}</h4>
+                <p>{item.content}</p>
+              </li>
+            )
+          })
+        }
+      </ul>
     </div>
   );
 }
