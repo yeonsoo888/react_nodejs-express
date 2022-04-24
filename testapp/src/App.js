@@ -1,5 +1,5 @@
+import { Route } from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
@@ -9,7 +9,6 @@ function App() {
   useEffect(() => {
     axios.get('/list')
     .then((Response)=>{
-      console.log(Response.data)
       setPost(Response.data);
     })
     .catch((Error)=>{console.log(Error)})
@@ -17,6 +16,12 @@ function App() {
 
   return (
     <div className="App">
+      <header>
+        123
+      </header>
+        <Route path="/test">
+          데이터
+        </Route>
       <ul>
         {
           post.map((item,i) => {

@@ -25,7 +25,6 @@ app.get('/', function (요청, 응답) {
 });
 
 
-
 app.get('/list',(req,res) => {
     db.collection("post").find().toArray((err,result) => {
         if(err) {return console.log(err)}
@@ -33,7 +32,7 @@ app.get('/list',(req,res) => {
     });
 });
 
-
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
 });
+
