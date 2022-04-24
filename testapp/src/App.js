@@ -1,7 +1,8 @@
 import { Route } from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import './App.css';
 import axios from 'axios';
+import Form from './components/form';
+
 
 function App() {
   const [post,setPost] = useState([])
@@ -19,21 +20,24 @@ function App() {
       <header>
         123
       </header>
-        <Route path="/test">
-          데이터
-        </Route>
-      <ul>
-        {
-          post.map((item,i) => {
-            return (
-              <li>
-                <h4>{item.title}</h4>
-                <p>{item.content}</p>
-              </li>
-            )
-          })
-        }
-      </ul>
+      <Route exact path="/">
+        <ul>
+          {
+            post.map((item,i) => {
+              return (
+                <li>
+                  <h4>{item.title}</h4>
+                  <p>{item.content}</p>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </Route>
+      <Route path="/write">
+        <Form data={post} />
+      </Route>
+      
     </div>
   );
 }

@@ -32,6 +32,20 @@ app.get('/list',(req,res) => {
     });
 });
 
+app.post('/add', function(req, res){
+    res.send('전송완료');
+
+});
+
+app.post('/axios/add', (req, res) => {
+    console.log(req.body);
+    db.collection('post').insertOne({할일 : req.body.title, 날짜 : req.body.date},(err,res) => {
+        
+    })
+    .then(result => {})
+    .catch(err => {})
+})
+
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
 });
