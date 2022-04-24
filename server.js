@@ -1,11 +1,17 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const port = 3000;
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
 const MongoClient = require('mongodb').MongoClient;
 
 const http = require('http').createServer(app);
 
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(bodyParser.json());
 
 let db;
 MongoClient.connect('mongodb+srv://admin:qwer1234@cluster0.rtid5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',(에러,client)=>{
@@ -32,18 +38,12 @@ app.get('/list',(req,res) => {
     });
 });
 
-app.post('/add', function(req, res){
-    res.send('전송완료');
 
-});
-
-app.post('/axios/add', (req, res) => {
+app.post('/add', (req, res) => {
     console.log(req.body);
-    db.collection('post').insertOne({할일 : req.body.title, 날짜 : req.body.date},(err,res) => {
+    db.collection('post').insertOne({title : req.body.title, date : req.body.date},(err,res) => {
         
     })
-    .then(result => {})
-    .catch(err => {})
 })
 
 app.get('*', function (요청, 응답) {

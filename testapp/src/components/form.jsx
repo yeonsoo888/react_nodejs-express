@@ -23,7 +23,7 @@ export default function Form({data}) {
         setNewPost({...newPost,[name]:value});
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         const inputVal = newPost.title;
         const textareaVal = newPost.date;
         console.log(inputVal);
@@ -31,15 +31,18 @@ export default function Form({data}) {
         
         const newPosts = [newPost,...posts];
         setPosts(newPosts);
-        
-        axios('/axios/add', {
-            method: 'POST',
+
+        axios({
+            method: 'post',
+            url: '/add',
             data: {
                 title: inputVal,
                 date: textareaVal,
-            },
-            headers: new Headers()
-        });
+            }
+        })
+        .then((res) => {
+            console.log(res);
+        })
     }
 
 
