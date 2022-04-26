@@ -49,6 +49,9 @@ export default function Form({data}) {
 
     return (
         <>
+            <form>
+
+            </form>
             <div className="inputBox">
                 <input type="text" placeholder="제목을 입력하세요" name="title" value={newPost.title} onChange={handleChange} ref={input} /> <br />
                 <textarea placeholder="본문을 입력하세요" name="date" value={newPost.date} onChange={handleChange} ref={textarea}></textarea> <br />

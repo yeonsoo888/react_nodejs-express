@@ -42,9 +42,9 @@ app.get('/list',(req,res) => {
 app.post('/add', (req, res) => {
     console.log(req.body);
     db.collection('post').insertOne({title : req.body.title, date : req.body.date},(err,res) => {
-        
-    })
-})
+        if(err) console.log(err);
+    });
+});
 
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
