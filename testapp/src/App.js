@@ -1,9 +1,9 @@
 import { Route , Switch } from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-import Form from './components/form';
+import Board from './components/board';
 import Header from './components/header';
-
+import {ListGroup} from 'react-bootstrap';
 import './css/style.scss';
 
 function App() {
@@ -22,22 +22,24 @@ function App() {
         <Header />
           <Switch>
             <Route exact path="/">
-              <ul>
-                {
-                  post.map((item,i) => {
-                    return (
-                      <li key={i}>
-                        <h4>{item.title}</h4>
-                        <p>{item.content}</p>
-                      </li>
-                    )
-                  })
-                }
-              </ul>
+              <div className="inner">
+                <ListGroup as="ul">
+                    {
+                      post.map((item,i) => {
+                        return (
+                          <ListGroup.Item as="li" key={i}>
+                            <h4>{item.title}</h4>
+                            <p>{item.content}</p>
+                          </ListGroup.Item>
+                        )
+                      })
+                    }
+                </ListGroup>
+              </div>
             </Route>
         </Switch>
         <Route path="/write">
-          <Form data={post} />
+          <Board data={post} />
         </Route>
     </>
   );
