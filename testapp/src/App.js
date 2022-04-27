@@ -14,6 +14,7 @@ function App() {
     axios.get('/list')
     .then((Response)=>{
       setPost(Response.data);
+      console.log(Response);
     })
     .catch((Error)=>{console.log(Error)})
   }, []);
