@@ -51,28 +51,26 @@ export default function Board({data}) {
     return (
         <>
             <SubLayout name={"board"}>
-                <div className="inner">
-                    <Form>
-                        <div className="inputBox">
-                            <Form.Label>제목</Form.Label>
-                            <Form.Control placeholder="제목을 입력하세요" name="title" value={newPost.title} onChange={handleChange} ref={input} />
-                            <Form.Label>날짜</Form.Label>
-                            <Form.Control placeholder="날짜 입력하세요" name="date" value={newPost.date} onChange={handleChange} ref={textarea} />
-                            <Button type="reset">cancel</Button>
-                            <Button onClick={handleSubmit}>create</Button>
-                        </div>
-                    </Form>
-                    <div className="showBox">
-                        {posts.map( (item,i) => {
-                            
-                            return (
-                                <article key={i}>
-                                    <h2>{item.title}</h2>
-                                    <p>{item.date}</p>
-                                </article>
-                            )
-                        })}
+                <Form>
+                    <div className="inputBox">
+                        <Form.Label>제목</Form.Label>
+                        <Form.Control placeholder="제목을 입력하세요" name="title" value={newPost.title} onChange={handleChange} ref={input} />
+                        <Form.Label>날짜</Form.Label>
+                        <Form.Control placeholder="날짜 입력하세요" name="date" value={newPost.date} onChange={handleChange} ref={textarea} />
+                        <Button type="reset">cancel</Button>
+                        <Button onClick={handleSubmit}>create</Button>
                     </div>
+                </Form>
+                <div className="showBox">
+                    {posts.map( (item,i) => {
+                        
+                        return (
+                            <article key={i}>
+                                <h2>{item.title}</h2>
+                                <p>{item.date}</p>
+                            </article>
+                        )
+                    })}
                 </div>
             </SubLayout>
         </>

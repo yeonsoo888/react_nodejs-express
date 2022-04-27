@@ -3,7 +3,9 @@ import React from "react";
 function SubLayout({children,name}) {
     return (
         <section className={`${name} subPage`}>
-            {children}
+            <div className="inner">
+                {children}
+            </div>
         </section>
     );
 }

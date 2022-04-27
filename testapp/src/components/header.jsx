@@ -9,6 +9,7 @@ function Header() {
                     <ul className="navList">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/write">Write</Link></li>
+                        <li><Link to="/login">Auth</Link></li>
                     </ul>
                 </nav>
             </div>

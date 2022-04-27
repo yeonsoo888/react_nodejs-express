@@ -2,6 +2,7 @@ import { Route , Switch } from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Board from './components/board';
+import Login from './components/login';
 import Header from './components/header';
 import {ListGroup} from 'react-bootstrap';
 import './css/style.scss';
@@ -40,6 +41,9 @@ function App() {
         </Switch>
         <Route path="/write">
           <Board data={post} />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
     </>
   );
