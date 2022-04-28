@@ -55,7 +55,7 @@ app.post('/add', (req, res) => {
 });
 
 app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), function(요청, 응답){
-    console.log(요청);
+    console.log("ok");
 });
 
 passport.use(new LocalStrategy({
@@ -64,7 +64,7 @@ passport.use(new LocalStrategy({
     session: true,
     passReqToCallback: false,
 }, function (입력한메일, 입력한비번, done) {
-    //console.log(입력한메일, 입력한비번);
+    console.log(입력한메일 + "," + 입력한비번);
     db.collection('member').findOne({ mail: 입력한메일 }, function (에러, 결과) {
         if (에러) return done(에러)
     
@@ -78,11 +78,11 @@ passport.use(new LocalStrategy({
 }));
 
 passport.serializeUser(function (user, done) {
-    done(null, user.id)
+    done(null, user.mail);
 });
 
 passport.deserializeUser(function (아이디, done) {
-    done(null, {})
+    done(null, {});
 }); 
 
 app.get('*', function (요청, 응답) {
