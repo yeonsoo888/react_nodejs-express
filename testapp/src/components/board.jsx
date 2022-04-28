@@ -16,7 +16,7 @@ export default function Board({data}) {
 
     useEffect(() => {
         setPosts(data);
-    },[])
+    }, [data]);
     
     
     const handleChange = (e) => {
@@ -27,9 +27,6 @@ export default function Board({data}) {
     const handleSubmit = () => {
         const inputVal = newPost.title;
         const textareaVal = newPost.date;
-        console.log(inputVal);
-        console.log(textareaVal);
-        
         const newPosts = [newPost,...posts];
         setPosts(newPosts);
 
@@ -43,6 +40,9 @@ export default function Board({data}) {
         })
         .then((res) => {
             console.log(res);
+        })
+        .catch((err) => {
+            console.log(err);
         })
     }
 

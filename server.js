@@ -9,6 +9,15 @@ const MongoClient = require('mongodb').MongoClient;
 
 const http = require('http').createServer(app);
 
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+
+app.use(session({secret : 'secretCode', resave : true, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session()); 
+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
@@ -40,11 +49,41 @@ app.get('/list',(req,res) => {
 
 
 app.post('/add', (req, res) => {
-    console.log(req.body);
     db.collection('post').insertOne({title : req.body.title, date : req.body.date},(err,res) => {
         if(err) console.log(err);
     });
 });
+
+app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), function(요청, 응답){
+    console.log(요청);
+});
+
+passport.use(new LocalStrategy({
+    usernameField: 'mail',
+    passwordField: 'pw',
+    session: true,
+    passReqToCallback: false,
+}, function (입력한메일, 입력한비번, done) {
+    //console.log(입력한메일, 입력한비번);
+    db.collection('member').findOne({ mail: 입력한메일 }, function (에러, 결과) {
+        if (에러) return done(에러)
+    
+        if (!결과) return done(null, false, { message: '존재하지않는 아이디요' })
+        if (입력한비번 == 결과.pw) {
+            return done(null, 결과)
+        } else {
+            return done(null, false, { message: '비번틀렸어요' })
+        }
+    })
+}));
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id)
+});
+
+passport.deserializeUser(function (아이디, done) {
+    done(null, {})
+}); 
 
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));

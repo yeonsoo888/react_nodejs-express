@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-// import axios from 'axios';
+import axios from 'axios';
 import {Button , Form } from 'react-bootstrap';
 import SubLayout from "./subLayout";
+import { useHistory } from "react-router";
 
 export default function Login() {
-
+    const history = useHistory();
     const [joinUser,setJoinUser] = useState(
         {
             mail: null,
@@ -15,7 +16,7 @@ export default function Login() {
     
     const [loginUser,setLoginUser] = useState(
         {
-            name: null,
+            mail: null,
             pw: null,
         }
     );
@@ -25,12 +26,49 @@ export default function Login() {
         const newJoinUser = {...joinUser, [name] : value};
         setJoinUser(newJoinUser);
     };
+
+    const joinSubmit = () => {
+        axios({
+            method: 'post',
+            url: "join",
+            data : {
+                mail : joinUser.mail,
+                name : joinUser.name,
+                pw : joinUser.pw
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            history.push("/");
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
     
     const loginInputChange = (e) => {
         const { name , value } = e.currentTarget;
         const newLoginnUser = {...loginUser, [name] : value};
         setLoginUser(newLoginnUser);
     };
+
+    const loginSubmit = () => {
+        axios({
+            method: 'post',
+            url: "/login",
+            data : {
+                mail : loginUser.mail,
+                pw : loginUser.pw
+            }
+        })
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
 
     return (
         <>
@@ -44,7 +82,7 @@ export default function Login() {
                     <Form.Label>비밀번호</Form.Label>
                     <Form.Control placeholder="비밀번호" type="password" name="pw" onChange={joinInputChange} />
                     <br />
-                    <Button>회원가입</Button>
+                    <Button type="button" onClick={joinSubmit}>회원가입</Button>
                     <br />
                     <br />
                     <br />
@@ -54,7 +92,7 @@ export default function Login() {
                     <Form.Label>비밀번호</Form.Label>
                     <Form.Control placeholder="비밀번호" name="pw" type="password" onChange={loginInputChange} />
                     <br />
-                    <Button>로그인</Button>
+                    <Button onClick={loginSubmit}>로그인</Button>
                 </Form>
             </SubLayout>
         </>

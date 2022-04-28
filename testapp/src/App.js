@@ -9,14 +9,17 @@ import './css/style.scss';
 
 function App() {
   const [post,setPost] = useState([])
+  const [confirmErr,setConfirmErr] = useState(false);
 
   useEffect(() => {
     axios.get('/list')
     .then((Response)=>{
       setPost(Response.data);
-      console.log(Response);
     })
-    .catch((Error)=>{console.log(Error)})
+    .catch((Error)=>{
+      setConfirmErr(true);
+      console.log(Error);
+    })
   }, []);
 
   return (
@@ -37,6 +40,9 @@ function App() {
                       })
                     }
                 </ListGroup>
+                {
+                  confirmErr && <p>내용이 없습니다.</p>
+                }
               </div>
             </Route>
         </Switch>
