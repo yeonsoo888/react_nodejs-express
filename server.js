@@ -19,7 +19,11 @@ app.use(passport.session());
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors({
+    origin: true,  
+    credentials: true, // 크로스 도메인 허용
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+}));
 app.use(bodyParser.json());
 
 let db;
@@ -54,7 +58,7 @@ app.post('/add', (req, res) => {
     });
 });
 
-app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), function(요청, 응답){
+app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), function(req, res){
     console.log("ok");
 });
 
@@ -64,7 +68,7 @@ passport.use(new LocalStrategy({
     session: true,
     passReqToCallback: false,
 }, function (입력한메일, 입력한비번, done) {
-    console.log(입력한메일 + "," + 입력한비번);
+    // console.log(입력한메일 + "," + 입력한비번);
     db.collection('member').findOne({ mail: 입력한메일 }, function (에러, 결과) {
         if (에러) return done(에러)
     
@@ -78,7 +82,7 @@ passport.use(new LocalStrategy({
 }));
 
 passport.serializeUser(function (user, done) {
-    done(null, user.mail);
+    done(null, user._id);
 });
 
 passport.deserializeUser(function (아이디, done) {

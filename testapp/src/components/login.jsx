@@ -55,11 +55,12 @@ export default function Login() {
     const loginSubmit = () => {
         axios({
             method: 'post',
+            credentials: 'include',
             url: "/login",
             data : {
                 mail : loginUser.mail,
                 pw : loginUser.pw
-            }
+            },
         })
         .then((res) => {
             console.log(res);
@@ -67,7 +68,7 @@ export default function Login() {
         .catch((err) => {
             console.log(err);
         })
-    }
+    };
 
 
     return (
