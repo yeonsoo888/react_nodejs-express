@@ -10,6 +10,11 @@ import './css/style.scss';
 function App() {
   const [post,setPost] = useState([])
   const [confirmErr,setConfirmErr] = useState(false);
+  const [confirmLogin,setConfirmLogin] = useState(false);
+
+  const changeAuth = () => {
+    setConfirmLogin(!confirmLogin);
+  }
 
   useEffect(() => {
     axios.get('/list')
@@ -49,8 +54,8 @@ function App() {
         <Route path="/write">
           <Board data={post} />
         </Route>
-        <Route path="/login">
-          <Login />
+        <Route path="/login" >
+          <Login changeAuth={changeAuth} confirmLogin={confirmLogin} />
         </Route>
     </>
   );

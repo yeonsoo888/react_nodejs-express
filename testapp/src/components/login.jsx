@@ -5,7 +5,7 @@ import SubLayout from "./subLayout";
 import { useHistory } from "react-router";
 import Cookies from 'js-cookie';
 
-export default function Login() {
+export default function Login({ changeAuth , confirmLogin}) {
     const history = useHistory();
     const [joinUser,setJoinUser] = useState(
         {
@@ -42,6 +42,7 @@ export default function Login() {
             console.log(res);
             history.push("/");
         })
+
         .catch((err) => {
             console.log(err);
         })
@@ -64,16 +65,13 @@ export default function Login() {
             },
         })
         .then((res) => {
-            console.log(res);
+            changeAuth();
         })
         .catch((err) => {
             console.log(err);
         })
     };
 
-    useEffect(() => {
-        console.log(Cookies.get("connect.sid"));
-    },[])
 
 
 

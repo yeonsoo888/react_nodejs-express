@@ -61,6 +61,7 @@ app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), 
     db.collection('member').findOne({mail: req.body.mail},function(err,result) {
         res.send(result);
     });
+    console.log(req.user);
     console.log("ok");
 });
 
