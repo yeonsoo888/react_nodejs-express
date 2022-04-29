@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3000;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -59,6 +58,9 @@ app.post('/add', (req, res) => {
 });
 
 app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), function(req, res){
+    db.collection('member').findOne({mail: req.body.mail},function(err,result) {
+        res.send(result);
+    });
     console.log("ok");
 });
 
@@ -82,7 +84,7 @@ passport.use(new LocalStrategy({
 }));
 
 passport.serializeUser(function (user, done) {
-    done(null, user._id);
+    done(null, user.mail);
 });
 
 passport.deserializeUser(function (아이디, done) {

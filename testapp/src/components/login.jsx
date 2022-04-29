@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import {Button , Form } from 'react-bootstrap';
 import SubLayout from "./subLayout";
 import { useHistory } from "react-router";
+import Cookies from 'js-cookie';
 
 export default function Login() {
     const history = useHistory();
@@ -69,6 +70,11 @@ export default function Login() {
             console.log(err);
         })
     };
+
+    useEffect(() => {
+        console.log(Cookies.get("connect.sid"));
+    },[])
+
 
 
     return (
