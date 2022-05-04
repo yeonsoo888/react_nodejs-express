@@ -61,18 +61,16 @@ app.post('/add', (req, res) => {
 
 app.post('/login', function(req, res){
     db.collection('member').findOne({mail: req.body.mail},function(err,result) {
-        const id = 'yeonsoo';
-        const nick = 'yeon';
+        const mail = req.body.mail;
 
         const token = jwt.sign({
-            id,
-            nick,
+            mail,
         }, "scretCode", {
             expiresIn: '1m', // 1분
             issuer: '토큰발급자',
         });
-        // res.send(result);
-        console.log(token);
+        res.send(token);
+        
     });
     // console.log("ok");
 });

@@ -4,6 +4,9 @@ import {Button , Form } from 'react-bootstrap';
 import SubLayout from "./subLayout";
 import { useHistory } from "react-router";
 import Cookies from 'js-cookie';
+import jwt_decode from "jwt-decode";
+
+
 
 export default function Login({ changeAuth , confirmLogin}) {
     const history = useHistory();
@@ -65,7 +68,9 @@ export default function Login({ changeAuth , confirmLogin}) {
             },
         })
         .then((res) => {
-            changeAuth();
+            const token = res.data;
+            localStorage.setItem("jwtToken",token);
+            console.log(jwt_decode(token));
         })
         .catch((err) => {
             console.log(err);
