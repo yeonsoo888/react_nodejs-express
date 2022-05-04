@@ -12,6 +12,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 
+const jwt = require("jsonwebtoken");
+
 app.use(session({secret : 'secretCode', resave : true, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session()); 
@@ -57,6 +59,24 @@ app.post('/add', (req, res) => {
     });
 });
 
+app.post('/login', function(req, res){
+    db.collection('member').findOne({mail: req.body.mail},function(err,result) {
+        const id = 'yeonsoo';
+        const nick = 'yeon';
+
+        const token = jwt.sign({
+            id,
+            nick,
+        }, "scretCode", {
+            expiresIn: '1m', // 1분
+            issuer: '토큰발급자',
+        });
+        // res.send(result);
+        console.log(token);
+    });
+    // console.log("ok");
+});
+/* 
 app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), function(req, res){
     db.collection('member').findOne({mail: req.body.mail},function(err,result) {
         res.send(result);
@@ -91,7 +111,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (아이디, done) {
     done(null, {});
 }); 
-
+*/
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
 });

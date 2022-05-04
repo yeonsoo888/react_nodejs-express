@@ -16,10 +16,12 @@
     "express": "^4.17.3",
     "express-session": "^1.17.2",
     "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.4",
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
+    "rand-token": "^1.0.1",
     "sass": "^1.51.0"
   }
 }
