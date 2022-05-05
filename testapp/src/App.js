@@ -19,6 +19,7 @@ function App() {
 
   const changeAuth = () => {
     setConfirmLogin(!confirmLogin);
+    console.log(confirmLogin);
   }
 
   useEffect(() => {
@@ -34,11 +35,11 @@ function App() {
 
   return (
     <>
-        <Header  />
+        <Header confirmLogin={confirmLogin} />
           <Switch>
             <Route exact path="/">
               <div className="inner">
-                <Login changeAuth={changeAuth} confirmLogin={confirmLogin} setLoginedUser={setLoginedUser} loginedUser={loginedUser} />
+                <Login changeAuth={changeAuth} confirmLogin={confirmLogin} setConfirmLogin={setConfirmLogin} setLoginedUser={setLoginedUser} loginedUser={loginedUser} />
               </div>
             </Route>
         </Switch>

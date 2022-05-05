@@ -8,7 +8,7 @@ import jwt_decode from "jwt-decode";
 
 
 
-export default function Login({ changeAuth , confirmLogin, setLoginedUser, loginedUser}) {
+export default function Login({ changeAuth , setConfirmLogin, setLoginedUser, loginedUser}) {
     const history = useHistory(); 
     
     const [loginUser,setLoginUser] = useState(
@@ -51,7 +51,7 @@ export default function Login({ changeAuth , confirmLogin, setLoginedUser, login
     useEffect(() => {
         let nowToken = localStorage.getItem("jwtToken");
         if(nowToken == null) return;
-        changeAuth();
+        setConfirmLogin(true);
         let userInfo = jwt_decode(nowToken);
         let currentUser = {...loginedUser, ["email"]: userInfo.mail};
         setLoginedUser(currentUser);
