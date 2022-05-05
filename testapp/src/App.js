@@ -4,13 +4,18 @@ import axios from 'axios';
 import Board from './components/board';
 import Login from './components/login';
 import Header from './components/header';
-import {ListGroup} from 'react-bootstrap';
+import List from './components/list';
+
 import './css/style.scss';
 
 function App() {
   const [post,setPost] = useState([])
   const [confirmErr,setConfirmErr] = useState(false);
   const [confirmLogin,setConfirmLogin] = useState(false);
+  const [loginedUser,setLoginedUser] = useState({
+    email : null,
+  })
+
 
   const changeAuth = () => {
     setConfirmLogin(!confirmLogin);
@@ -29,33 +34,19 @@ function App() {
 
   return (
     <>
-        <Header />
+        <Header  />
           <Switch>
             <Route exact path="/">
               <div className="inner">
-                <ListGroup as="ul">
-                    {
-                      post.map((item,i) => {
-                        return (
-                          <ListGroup.Item as="li" key={i}>
-                            <h4>{item.title}</h4>
-                            <p>{item.content}</p>
-                          </ListGroup.Item>
-                        )
-                      })
-                    }
-                </ListGroup>
-                {
-                  confirmErr && <p>내용이 없습니다.</p>
-                }
+                <Login changeAuth={changeAuth} confirmLogin={confirmLogin} setLoginedUser={setLoginedUser} loginedUser={loginedUser} />
               </div>
             </Route>
         </Switch>
-        <Route path="/write">
-          <Board data={post} />
+        <Route path="/list" >
+          <List post={post} loginedUser={loginedUser} />
         </Route>
-        <Route path="/login" >
-          <Login changeAuth={changeAuth} confirmLogin={confirmLogin} />
+        <Route path="/write">
+          <Board data={post} confirmErr={confirmErr} />
         </Route>
     </>
   );

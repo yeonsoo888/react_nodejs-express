@@ -8,8 +8,8 @@ function Header() {
                 <nav className="nav">
                     <ul className="navList">
                         <li><Link to="/">Home</Link></li>
+                        <li><Link to="/list">list</Link></li>
                         <li><Link to="/write">Write</Link></li>
-                        <li><Link to="/login">Auth</Link></li>
                     </ul>
                 </nav>
             </div>

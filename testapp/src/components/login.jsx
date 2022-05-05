@@ -8,15 +8,8 @@ import jwt_decode from "jwt-decode";
 
 
 
-export default function Login({ changeAuth , confirmLogin}) {
-    const history = useHistory();
-    const [joinUser,setJoinUser] = useState(
-        {
-            mail: null,
-            name: null,
-            pw: null,
-        }
-    );
+export default function Login({ changeAuth , confirmLogin, setLoginedUser, loginedUser}) {
+    const history = useHistory(); 
     
     const [loginUser,setLoginUser] = useState(
         {
@@ -25,32 +18,6 @@ export default function Login({ changeAuth , confirmLogin}) {
         }
     );
 
-    const joinInputChange = (e) => {
-        const { name , value } = e.currentTarget;
-        const newJoinUser = {...joinUser, [name] : value};
-        setJoinUser(newJoinUser);
-    };
-
-    const joinSubmit = () => {
-        axios({
-            method: 'post',
-            url: "join",
-            data : {
-                mail : joinUser.mail,
-                name : joinUser.name,
-                pw : joinUser.pw
-            }
-        })
-        .then((res) => {
-            console.log(res);
-            history.push("/");
-        })
-
-        .catch((err) => {
-            console.log(err);
-        })
-    }
-    
     const loginInputChange = (e) => {
         const { name , value } = e.currentTarget;
         const newLoginnUser = {...loginUser, [name] : value};
@@ -70,31 +37,30 @@ export default function Login({ changeAuth , confirmLogin}) {
         .then((res) => {
             const token = res.data;
             localStorage.setItem("jwtToken",token);
-            console.log(jwt_decode(token));
+            let userInfo = jwt_decode(token);
+            history.push("/list");
+            changeAuth();
+            let currentUser = {...loginedUser, ["email"]: userInfo.mail};
+            setLoginedUser(currentUser);
         })
         .catch((err) => {
             console.log(err);
         })
     };
 
-
-
+    useEffect(() => {
+        let nowToken = localStorage.getItem("jwtToken");
+        if(nowToken == null) return;
+        changeAuth();
+        let userInfo = jwt_decode(nowToken);
+        let currentUser = {...loginedUser, ["email"]: userInfo.mail};
+        setLoginedUser(currentUser);
+    },[]);
 
     return (
         <>
             <SubLayout name={"login"}>
                 <Form>
-                    <h4>회원가입</h4>
-                    <Form.Label>이메일</Form.Label>
-                    <Form.Control placeholder="이메일" name="mail" onChange={joinInputChange} />
-                    <Form.Label>이름</Form.Label>
-                    <Form.Control placeholder="이름" name="name" onChange={joinInputChange} />
-                    <Form.Label>비밀번호</Form.Label>
-                    <Form.Control placeholder="비밀번호" type="password" name="pw" onChange={joinInputChange} />
-                    <br />
-                    <Button type="button" onClick={joinSubmit}>회원가입</Button>
-                    <br />
-                    <br />
                     <br />
                     <h4>로그인</h4>
                     <Form.Label>이메일</Form.Label>
