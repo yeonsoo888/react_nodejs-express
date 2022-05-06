@@ -33,14 +33,23 @@ function App() {
     })
   }, []);
 
+  console.log(confirmLogin);
   return (
     <>
         <Header confirmLogin={confirmLogin} />
           <Switch>
             <Route exact path="/">
-              <div className="inner">
-                <Login changeAuth={changeAuth} confirmLogin={confirmLogin} setConfirmLogin={setConfirmLogin} setLoginedUser={setLoginedUser} loginedUser={loginedUser} />
-              </div>
+              {
+                !confirmLogin
+                ? 
+                <div className="inner">
+                  <Login changeAuth={changeAuth} confirmLogin={confirmLogin} setConfirmLogin={setConfirmLogin} setLoginedUser={setLoginedUser} loginedUser={loginedUser} />
+                </div>
+                :
+                <div className="inner">
+                  <p>안녕하세요 {loginedUser.email} 님</p>
+                </div>
+              }
             </Route>
         </Switch>
         <Route path="/list" >
