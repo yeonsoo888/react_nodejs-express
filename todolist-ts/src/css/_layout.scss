@@ -11,6 +11,11 @@ $main-color : #333;
     }
     .nav {
         display: flex; align-items: center; height: 100%;
+
+        .navList {
+            display: flex;
+            flex: 1;
+        }
     }
     .logo {
         span {
