@@ -1,13 +1,14 @@
 import { combineReducers } from "redux";
 
-interface action {
+interface Action {
     type?:string,
     payload? : {
         mail?: string,
+        youtube? : [],
     },
 }
 
-const memberReducer = (state:{} = {member:{}}, action: action) => {
+const memberReducer = (state:{} = {member:{}}, action: Action) => {
     switch (action.type) {
         case "loginMember" :
             return {...state, member:action.payload};
@@ -17,9 +18,18 @@ const memberReducer = (state:{} = {member:{}}, action: action) => {
             return state;
     }
 }
+const youtubeReducer = (state:{} = {youtube:[]}, action: Action) => {
+    switch (action.type) {
+        case "setYoutube" :
+            return {...state, youtube: action.payload};
+        default : 
+            return state;
+    }
+}
 
 const reducers = combineReducers({
     memberReducer,
+    youtubeReducer,
 })
 
 export default reducers

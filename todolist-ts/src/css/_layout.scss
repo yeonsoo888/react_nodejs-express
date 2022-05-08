@@ -7,6 +7,7 @@ $main-color : #333;
 .header {
     height: 100px; background: $main-color;
     .limit {
+        position: relative;
         height: 100%;
     }
     .nav {
@@ -14,14 +15,25 @@ $main-color : #333;
 
         .navList {
             display: flex;
+            justify-content: center;
             flex: 1;
+            a {
+                padding: 0 1.5rem;
+                
+                span {
+                    color: #fff;
+                }
+            }
         }
     }
     .logo {
+        position: absolute; display: flex; align-items: center; left: 10px; top: 0; height: 100%;
         span {
             color: #fff; font-size: 1.5rem; font-weight: 700;
         }
     }
+
+    button {position: absolute; right: 10px; top: 50%; transform: translate(0,-50%); background: #fff; border: none; padding: 0.5rem; font-weight: 700; font-size: 1rem;}
 }
 
 .footer {
@@ -46,5 +58,37 @@ $main-color : #333;
     }
     button {
         width: 100%; background: $main-color; margin: 0.5rem 0 0; height: 3rem; color: #fff; font-size: 1.5rem; font-weight: 500;
+    }
+}
+
+.youtubeList {
+    display: flex; flex-wrap: wrap; max-width: 700px; margin: 0 auto; 
+    li {
+        width: calc((100% - 10px) / 2); margin: 0 10px 20px 0; cursor: pointer;
+        &:nth-of-type(2n) {
+            margin: 0 0 20px;
+        }
+        
+        img {
+            width: 100%;
+        }
+        .youtube {
+            &__tit {
+                font-size: 1.5rem; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+            }
+            &__txt {
+                font-size: 1rem; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* 라인수 */
+                -webkit-box-orient: vertical;
+                word-wrap:break-word; 
+                line-height: 1.2em;
+                height: 3.6em; 
+            }
+        }
+        
+        
     }
 }
