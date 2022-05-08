@@ -70,46 +70,9 @@ app.post('/login', function(req, res){
             issuer: '토큰발급자',
         });
         res.send(token);
-        
     });
-    // console.log("ok");
-});
-/* 
-app.post('/login', passport.authenticate('local', {failureRedirect : '/fail'}), function(req, res){
-    db.collection('member').findOne({mail: req.body.mail},function(err,result) {
-        res.send(result);
-    });
-    console.log(req.user);
-    console.log("ok");
 });
 
-passport.use(new LocalStrategy({
-    usernameField: 'mail',
-    passwordField: 'pw',
-    session: true,
-    passReqToCallback: false,
-}, function (입력한메일, 입력한비번, done) {
-    // console.log(입력한메일 + "," + 입력한비번);
-    db.collection('member').findOne({ mail: 입력한메일 }, function (에러, 결과) {
-        if (에러) return done(에러)
-    
-        if (!결과) return done(null, false, { message: '존재하지않는 아이디요' })
-        if (입력한비번 == 결과.pw) {
-            return done(null, 결과)
-        } else {
-            return done(null, false, { message: '비번틀렸어요' })
-        }
-    })
-}));
-
-passport.serializeUser(function (user, done) {
-    done(null, user.mail);
-});
-
-passport.deserializeUser(function (아이디, done) {
-    done(null, {});
-}); 
-*/
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
 });
