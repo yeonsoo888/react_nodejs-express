@@ -60,6 +60,7 @@ app.post('/add', (req, res) => {
 });
 
 app.post('/login', function(req, res){
+    console.log("ok");
     db.collection('member').findOne({mail: req.body.mail},function(err,result) {
         const mail = req.body.mail;
 
