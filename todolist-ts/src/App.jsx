@@ -5,6 +5,7 @@ import Header from './components/common/header';
 import Footer from './components/common/footer';
 import Login from './components/sub/login';
 import Youtube from './components/sub/youtube';
+import Board from './components/sub/board';
 
 import store from './redux/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,6 +66,9 @@ function App() {
       </Switch>
       <Route path='/youtube'>
           <Youtube />
+      </Route>
+      <Route path='/board'>
+          <Board />
       </Route>
       <Footer />
     </div>

@@ -30,7 +30,8 @@ export default function Login({setIsLogin}) {
         .catch(err => {console.log(err)});
     };
 
-    const handleLogin = () => {
+    const handleLogin = (e) => {
+        e.preventDefault();
         fetchLogin();
     }
 
@@ -40,9 +41,11 @@ export default function Login({setIsLogin}) {
                 <div className="subPage">
                     <h4 className="subTit">LOGIN</h4>
                     <div className="loginWrap">
-                        <input type="text" placeholder="E-mail을 입력하세요" ref={inputMail} />
-                        <input type="password" placeholder="비밀번호를 입력하세요" ref={inputPw} />
-                        <button onClick={handleLogin}>로그인</button>
+                        <form onSubmit={handleLogin} >
+                            <input type="text" placeholder="E-mail을 입력하세요" ref={inputMail} />
+                            <input type="password" placeholder="비밀번호를 입력하세요" ref={inputPw} />
+                            <button type="submit">로그인</button>
+                        </form>
                     </div>
                 </div>
             </div>
