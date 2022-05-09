@@ -21,6 +21,8 @@ $main-color : #333;
                 padding: 0 1.5rem;
                 
                 span {
+                    font-weight: 600;
+                    letter-spacing: 0;
                     color: #fff;
                 }
             }
@@ -129,6 +131,36 @@ $main-color : #333;
             font-weight: 500; 
         }
     }
+}
+.boardWrite {
+    max-width: 800px; margin: 0 auto;
+    table {
+        width: 100%; border-top: 2px solid #333;
+        tr {
+            border-bottom: 1px solid #ddd;
+            > * {
+                border-right: 1px solid #ddd;
+                padding: 0.5rem;
+                &:last-child {
+                    border: none;
+                }
+            }
+            th {
+                width: 100px;
+                background: #f7f7f7;
+            }
+            td {
+                textarea,
+                input {
+                    border: 1px solid #ddd; height: 2.2rem; width: 100%; padding: 0 0.5rem;
+                }
+                textarea {
+                    height: 200px;
+                }
+            }
+        }
+    }
+    
 }
 
 .popUp {

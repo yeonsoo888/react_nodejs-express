@@ -1,37 +1,40 @@
 import axios from "axios";
-import React , {useEffect, useState} from "react";
-
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import List from "./board/list";
+import View from "./board/view";
 
 export default function Board() {
-    const [post,setPost] = useState([]);
-    const [selectPost,setSelectPost] = useState({
-        title : null,
+    const currentUser = useSelector(store => store.memberReducer.member);
+    const [post, setPost] = useState([]);
+    const [selectPost, setSelectPost] = useState({
+        title: null,
         content: null,
-        date : null,
+        date: null,
         writer: null,
     });
 
-    const [mode,setMode] = useState("list");
+    const [mode, setMode] = useState("list");
 
     const fetchBoard = async () => {
         await axios.get('list')
-        .then( response => {
-            setPost(response.data.reverse());
-        })
-        .catch( err => {
-            console.log(err);
-        })
+            .then(response => {
+                setPost(response.data.reverse());
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     const handleClickBoard = (idx) => {
         const target = post[idx];
         const newSelectPost = {
-            title : target.title,
+            title: target.title,
             content: target.content,
-            writer : target.writer,
-            date : target.date,
+            writer: target.writer,
+            date: target.date,
         }
-        setSelectPost({...selectPost,...newSelectPost});
+        setSelectPost({ ...selectPost, ...newSelectPost });
         setMode("view");
     }
 
@@ -44,43 +47,45 @@ export default function Board() {
             <div className="limit">
                 <div className="subPage">
                     {
-                        mode == "list" && 
-                        (
-                            <ul className="boardList">
-                            {
-                                post.map((item,idx) => {
-                                    return (
-                                        <li key={item._id} onClick={() => {handleClickBoard(idx)}}>
-                                            <strong>제목 : {item.title}</strong>
-                                            {
-                                                item.writer && <p>작성자 : {item.writer}</p>
-                                            }
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                        ) 
+                        mode == "list" && <List post={post} handleClickBoard={handleClickBoard} />
                     }
                     {
-                        mode == "view" && (
-                            <div className="boardView">
-                                <div className="titWrap">
-                                    <h4>{selectPost.title}</h4>
-                                    <ul>
-                                        <li>작성자 : {selectPost.writer}</li>
-                                        <li>작성일 : {selectPost.date}</li>
-                                        <li></li>
-                                    </ul>
-                                </div>
-                                <p className="contents">{selectPost.content}</p>
-                                <div className="btnWrap">
-                                    <button onClick={() => {setMode("list")}}>목록으로</button>
-                                </div>
+                        mode == "view" && <View selectPost={selectPost} setMode={setMode} />
+                    }
+                    {
+                        mode == "write" && (
+                            <div className="boardWrite">
+                                <form>
+                                    <table>
+                                        <tr>
+                                            <th>제목</th>
+                                            <td>
+                                                <input type="text" name="title" placeholder="제목" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>내용</th>
+                                            <td>
+                                                <textarea name="content" placeholder="내용"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                날짜
+                                            </th>
+                                            <td>
+                                                <input type="text" name="date" placeholder="날짜" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <input type="hidden" name="writer" value={currentUser.mail} hidden />
+                                    <button type="button" onClick={() => setMode("list")}>목록</button>
+                                    <button type="submit">작성완료</button>
+                                </form>
                             </div>
                         )
                     }
-                    
+                    <button onClick={()=>{setMode("write")}}>글쓰기</button>
                 </div>
             </div>
         </>

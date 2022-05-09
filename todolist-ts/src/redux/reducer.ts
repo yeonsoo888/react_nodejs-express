@@ -8,7 +8,7 @@ interface Action {
     },
 }
 
-const memberReducer = (state:{} = {member:{}}, action: Action) => {
+const memberReducer = (state:object = {member:{}}, action: Action) => {
     switch (action.type) {
         case "loginMember" :
             return {...state, member:action.payload};
@@ -18,7 +18,7 @@ const memberReducer = (state:{} = {member:{}}, action: Action) => {
             return state;
     }
 }
-const youtubeReducer = (state:{} = {youtube:[]}, action: Action) => {
+const youtubeReducer = (state:object = {youtube:[]}, action: Action) => {
     switch (action.type) {
         case "setYoutube" :
             return {...state, youtube: action.payload};
