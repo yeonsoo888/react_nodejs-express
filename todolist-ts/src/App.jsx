@@ -26,16 +26,16 @@ function App() {
     dispatch({type: "loginMember",payload:{mail:userInfo.mail}})
   },[]);
   
-
   const youtube = new YoutubeServ(process.env.REACT_APP_YOUTUBE_KEY,{
     maxLength: 10,
     search: "프론트엔드 개발",
   });
+
   const fetchPopularYoutube = async () => {
     await youtube.mostPopular()
       .then(res=>{
         dispatch({type:"setYoutube", payload: res});
-      });
+      })
   }
 
   useEffect(()=>{

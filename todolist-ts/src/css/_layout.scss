@@ -88,7 +88,12 @@ $main-color : #333;
                 height: 3.6em; 
             }
         }
-        
-        
+    }
+}
+
+.popUp {
+    position: fixed; left:0; top: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8);
+    .inner {
+        background: #fff; padding: 2rem; margin: 5rem auto ; max-width: 1024px;
     }
 }
