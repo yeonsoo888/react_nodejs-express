@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import List from "./board/list";
 import View from "./board/view";
-
+import Write from "./board/write";
 export default function Board() {
     const currentUser = useSelector(store => store.memberReducer.member);
     const [post, setPost] = useState([]);
@@ -53,37 +53,7 @@ export default function Board() {
                         mode == "view" && <View selectPost={selectPost} setMode={setMode} />
                     }
                     {
-                        mode == "write" && (
-                            <div className="boardWrite">
-                                <form>
-                                    <table>
-                                        <tr>
-                                            <th>제목</th>
-                                            <td>
-                                                <input type="text" name="title" placeholder="제목" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>내용</th>
-                                            <td>
-                                                <textarea name="content" placeholder="내용"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                날짜
-                                            </th>
-                                            <td>
-                                                <input type="text" name="date" placeholder="날짜" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <input type="hidden" name="writer" value={currentUser.mail} hidden />
-                                    <button type="button" onClick={() => setMode("list")}>목록</button>
-                                    <button type="submit">작성완료</button>
-                                </form>
-                            </div>
-                        )
+                        mode == "write" && <Write currentUser={currentUser} setMode={setMode} setSelectPost={setSelectPost} />
                     }
                     <button onClick={()=>{setMode("write")}}>글쓰기</button>
                 </div>

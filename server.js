@@ -54,8 +54,17 @@ app.get('/list',(req,res) => {
 
 
 app.post('/add', (req, res) => {
-    db.collection('post').insertOne({title : req.body.title, date : req.body.date},(err,res) => {
+    console.log("ok");
+    db.collection('post').insertOne({
+        title : req.body.title, 
+        content: req.body.content,
+        date : req.body.date,
+        writer: req.body.writer
+    },(err,res) => {
         if(err) console.log(err);
+        res.send({
+            text: "sucess",
+        });
     });
 });
 

@@ -18,7 +18,6 @@ import './css/style.scss';
 function App() {
   const dispatch = useDispatch();
   const currentMember = useSelector(store => store.memberReducer.member);
-  const youtubeList = useSelector(store => store.youtubeReducer.youtube);
 
   // 최초 접속시 loalstorage에 로그인 토큰이 있는지 확인 후 로그인 처리
   useEffect(() => {
