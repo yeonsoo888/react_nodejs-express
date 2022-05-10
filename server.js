@@ -62,9 +62,6 @@ app.post('/add', (req, res) => {
         writer: req.body.writer
     },(err,res) => {
         if(err) console.log(err);
-        res.send({
-            text: "sucess",
-        });
     });
 });
 
