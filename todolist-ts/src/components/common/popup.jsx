@@ -3,7 +3,7 @@ import React , {forwardRef, useState , useImperativeHandle} from "react";
 import {motion, AnimatePresence} from "framer-motion";
 
 
-const Popup = forwardRef((props , ref) => {
+const Popup = forwardRef(({children} , ref) => {
     const [open,setOpen] = useState(false);
     useImperativeHandle(ref, () => {
         return {
@@ -31,7 +31,7 @@ const Popup = forwardRef((props , ref) => {
                         }}
                     >
                         <div className="inner">
-                            123123
+                            {children}
                         </div>
                     </motion.div>
                 )

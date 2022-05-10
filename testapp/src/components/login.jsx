@@ -61,7 +61,6 @@ export default function Login({ changeAuth , setConfirmLogin, setLoginedUser, lo
         <>
             <SubLayout name={"login"}>
                 <Form>
-                    <br />
                     <h4>로그인</h4>
                     <Form.Label>이메일</Form.Label>
                     <Form.Control placeholder="이메일" name="mail" onChange={loginInputChange} />

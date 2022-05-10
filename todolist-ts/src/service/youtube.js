@@ -10,7 +10,7 @@ export default class YoutubeServ {
 
     mostPopular() {
         return fetch(
-            `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${this.obj.maxLength}&mostPopular&type=video&key=${this.key}`,
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${this.obj.maxLength}&q=${this.obj.search}&type=video&key=${this.key}`,
             this.getRequestOptions
         )
         .then(response => response.json())
