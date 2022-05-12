@@ -21,14 +21,14 @@ export default function Write({currentUser,setMode,setPost,post}) {
         })
         .then(res => {
             const newPost = [
-                ...post,
                 {
                     title: titInput.current.value,
                     content: cntsInput.current.value,
                     date: dateInput.current.value,
                     writer : writerInput.current.value,
-                }
-            ].reverse();
+                },
+                ...post,
+            ];
             setPost(newPost);
             setMode("list");
         })
