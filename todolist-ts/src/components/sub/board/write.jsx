@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useRef } from "react";
 
-export default function Write({currentUser,setMode,setSelectPost}) {
+export default function Write({currentUser,setMode,setPost,post}) {
     const titInput = useRef(null);
     const cntsInput = useRef(null);
     const dateInput = useRef(null);
@@ -20,13 +20,16 @@ export default function Write({currentUser,setMode,setSelectPost}) {
             }
         })
         .then(res => {
-            console.log(res);
-            setSelectPost({
-                title: titInput.current.value,
-                content: cntsInput.current.value,
-                date: dateInput.current.value,
-                writer : writerInput.current.value,
-            })
+            const newPost = [
+                ...post,
+                {
+                    title: titInput.current.value,
+                    content: cntsInput.current.value,
+                    date: dateInput.current.value,
+                    writer : writerInput.current.value,
+                }
+            ].reverse();
+            setPost(newPost);
             setMode("list");
         })
         .catch(err => {

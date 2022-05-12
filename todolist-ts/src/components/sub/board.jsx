@@ -53,7 +53,7 @@ export default function Board() {
                         mode == "view" && <View selectPost={selectPost} setMode={setMode} />
                     }
                     {
-                        mode == "write" && <Write currentUser={currentUser} setMode={setMode} setSelectPost={setSelectPost} />
+                        mode == "write" && <Write currentUser={currentUser} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} />
                     }
                     <div className="board__btnWrite">
                         <button className="board__btnWrite" onClick={()=>{setMode("write")}}>글쓰기</button>

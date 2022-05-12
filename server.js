@@ -59,8 +59,12 @@ app.post('/add', (req, res) => {
         content: req.body.content,
         date : req.body.date,
         writer: req.body.writer
-    },(err,res) => {
-        if(err) console.log(err);
+    },(err,result) => {
+        if(err) {
+            console.log(err)
+        }
+        res.send(result);
+
     });
 });
 
