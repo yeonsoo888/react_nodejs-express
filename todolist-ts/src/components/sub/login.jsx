@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useRef , useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
@@ -7,6 +7,7 @@ export default function Login({setIsLogin}) {
     const inputMail = useRef(null);
     const inputPw = useRef(null);
     const dispatch = useDispatch()
+    const [confirmId,setConfirmId] = useState(false);
 
     const fetchLogin = async () =>  {
         let mailValue = inputMail.current.value;
@@ -22,12 +23,18 @@ export default function Login({setIsLogin}) {
             },
         })
         .then((res) => {
+            console.log(res)
             const token = res.data;
             localStorage.setItem("jwtToken",token);
             let userInfo = jwt_decode(token);
             dispatch({type: "loginMember",payload: {mail:userInfo.mail}});
         })
-        .catch(err => {console.log(err)});
+        .catch(err => {
+            setConfirmId(true);
+            setTimeout(() => {
+                setConfirmId(false);
+            },2000);
+        });
     };
 
     const handleLogin = (e) => {
@@ -45,6 +52,9 @@ export default function Login({setIsLogin}) {
                             <input type="text" placeholder="E-mail을 입력하세요" ref={inputMail} />
                             <input type="password" placeholder="비밀번호를 입력하세요" ref={inputPw} />
                             <button type="submit">로그인</button>
+                            {
+                                confirmId && <p>ID , PASSWORD를 확인해주세요</p>
+                            }
                         </form>
                     </div>
                 </div>

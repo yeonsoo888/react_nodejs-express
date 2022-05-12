@@ -54,7 +54,6 @@ app.get('/list',(req,res) => {
 
 
 app.post('/add', (req, res) => {
-    console.log("ok");
     db.collection('post').insertOne({
         title : req.body.title, 
         content: req.body.content,
@@ -66,17 +65,19 @@ app.post('/add', (req, res) => {
 });
 
 app.post('/login', function(req, res){
-    console.log("ok");
     db.collection('member').findOne({mail: req.body.mail},function(err,result) {
-        const mail = req.body.mail;
-
-        const token = jwt.sign({
-            mail,
-        }, "scretCode", {
-            expiresIn: '1m', // 1분
-            issuer: '토큰발급자',
-        });
-        res.send(token);
+        if(result) {
+            const mail = req.body.mail;
+            const token = jwt.sign({
+                mail,
+            }, "scretCode", {
+                expiresIn: '1m', // 1분
+                issuer: '토큰발급자',
+            });
+            res.send(token);
+        } else {
+            res.status(500).send('Something broke!');
+        }
     });
 });
 
