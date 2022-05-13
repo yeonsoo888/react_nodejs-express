@@ -29,8 +29,8 @@ export default function Write({currentUser,setMode,setPost,post}) {
                 },
                 ...post,
             ];
-            setPost(newPost);
             setMode("list");
+            setPost(newPost);
         })
         .catch(err => {
             console.log(err);

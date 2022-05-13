@@ -74,7 +74,8 @@ app.post('/add', (req, res) => {
 });
 
 app.delete('/delete', function(req, res){
-    
+    req.body._id = parseInt(req.body._id)
+    console.log(req.body);
     db.collection('post').deleteOne(req.body, function(에러, 결과){
         console.log('삭제완료')
     })
