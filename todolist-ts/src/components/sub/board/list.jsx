@@ -34,8 +34,8 @@ function List({post,handleClickBoard}) {
             </ul>
             {
                 !modeMypost 
-                ? <button onClick={() => {setModeMyPost(true)}}>내가쓴 글</button>
-                : <button onClick={() => {setModeMyPost(false)}}>전체 글</button>
+                ? <div className="board__btnWrite"> <button className="" onClick={() => {setModeMyPost(true)}}>내가쓴 글</button> </div>
+                : <div className="board__btnWrite"> <button className="" onClick={() => {setModeMyPost(false)}}>전체 글</button> </div>
             }
         </>
     );

@@ -68,6 +68,14 @@ app.post('/add', (req, res) => {
     });
 });
 
+app.delete('/delete', function(req, res){
+    req.body._id = parseInt(req.body._id)
+    db.collection('post').deleteOne(req.body, function(에러, 결과){
+        console.log('삭제완료')
+    })
+    res.send('삭제완료')
+});
+
 app.post('/login', function(req, res){
     db.collection('member').findOne({mail: req.body.mail},function(err,result) {
         if(result) {
