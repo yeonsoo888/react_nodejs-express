@@ -67,7 +67,9 @@ app.post('/add', (req, res) => {
                 console.log(err)
             }
             db.collection('counter').updateOne( {name : 'totalCounter' } , { $inc : { counter : 1 } } , function(에러, 결과){
-                res.send(result);
+                res.send({
+                    _id: totalCount + 1
+                });
             })
         });
     });
