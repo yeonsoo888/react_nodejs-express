@@ -8,6 +8,7 @@ export default function Board() {
     const currentUser = useSelector(store => store.memberReducer.member);
     const [post, setPost] = useState([]);
     const [selectPost, setSelectPost] = useState({
+        id: null,
         title: null,
         content: null,
         date: null,
@@ -29,6 +30,7 @@ export default function Board() {
     const handleClickBoard = (idx) => {
         const target = post[idx];
         const newSelectPost = {
+            id: target._id,
             title: target.title,
             content: target.content,
             writer: target.writer,

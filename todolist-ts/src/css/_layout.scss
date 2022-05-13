@@ -129,6 +129,7 @@ $main-color : #333;
         button {
             background: #333; border: none; font-size: 1rem; padding: 0.5rem 1rem; color: #fff;
             font-weight: 500; 
+            & + button {margin: 0 0 0 1rem;}
         }
     }
 }
