@@ -35,13 +35,6 @@ function Youtube() {
                             })
                         }
                     </ul>
-                    {/* <li onClick={(e) => {
-                        popUp.current.open()
-                    }}>
-                        <img src="" alt="" />
-                        <strong className="youtube__tit">titletitletitletitle</strong>
-                        <p className="youtube__txt">item.snippet.description</p>
-                    </li> */}
                 </div>
             </div>
             <Popup ref={popUp} >
@@ -52,7 +45,6 @@ function Youtube() {
                         src={`http://www.youtube.com/embed/${selectedVid.id.videoId}?enablejsapi=1&origin=http://example.com`}
                         frameBorder="0"
                     >
-
                     </iframe>
                 </div>
             </Popup>

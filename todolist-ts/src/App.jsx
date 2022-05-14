@@ -52,15 +52,12 @@ function App() {
         <Route exact path='/'>
             {
               currentMember.mail == undefined 
-              ?
-              <Login />
-              :
-              <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-              </ul>
+              ? <Login />
+              : (
+                  <div className="subPage" style={{textAlign: "center",}}>
+                    <strong style={{fontSize:"1.5rem"}}>환영합니다 {currentMember.mail} 님!</strong>
+                  </div>
+              )
             }
         </Route>
       </Switch>

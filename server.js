@@ -87,7 +87,6 @@ app.delete('/delete', function(req, res){
 });
 
 app.put('/modify', function(req, res){
-    console.log(req.body);
     req.body._id = parseInt(req.body._id);
     db.collection('post').updateOne( 
         {_id : req.body._id}, 
@@ -95,7 +94,6 @@ app.put('/modify', function(req, res){
             { 
                 title : req.body.title, 
                 content: req.body.content,
-                date : req.body.date,
             }
         }, function(){
         res.send("수정완료");

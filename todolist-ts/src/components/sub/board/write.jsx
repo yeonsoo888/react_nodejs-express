@@ -5,9 +5,8 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
     const idInput = useRef(null);
     const titInput = useRef(null);
     const cntsInput = useRef(null);
-    const dateInput = useRef(null);
     const writerInput = useRef(null);
-
+    const today = new Date()
     const fecthWrite = async () => {
         await axios({
             method: 'post',
@@ -16,7 +15,7 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
             data: {
                 title: titInput.current.value,
                 content: cntsInput.current.value,
-                date: dateInput.current.value,
+                date: today.toLocaleDateString(),
                 writer : writerInput.current.value,
             }
         })
@@ -26,7 +25,7 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
                     _id : res.data._id,
                     title: titInput.current.value,
                     content: cntsInput.current.value,
-                    date: dateInput.current.value,
+                    date: today.toLocaleDateString(),
                     writer : writerInput.current.value,
                 },
                 ...post,
@@ -48,7 +47,6 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
                 _id: idInput.current.value,
                 title: titInput.current.value,
                 content: cntsInput.current.value,
-                date: dateInput.current.value,
                 writer : writerInput.current.value,
             }
         })
@@ -58,7 +56,6 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
                     if(item._id === parseInt(idInput.current.value)) {
                         item.title = titInput.current.value;
                         item.content = cntsInput.current.value;
-                        item.date = dateInput.current.value;
                     }
                     return item;
                 })
@@ -117,19 +114,6 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
                                     ? <textarea name="content" placeholder="내용" ref={cntsInput}></textarea>
                                     : <textarea name="content" placeholder="내용" ref={cntsInput} defaultValue={selectPost.content}></textarea>
                                 }
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                날짜
-                            </th>
-                            <td>
-                                {
-                                    mode == "write" 
-                                    ? <input type="text" name="date" placeholder="날짜" ref={dateInput} />
-                                    : <input type="text" name="date" placeholder="날짜" ref={dateInput} defaultValue={selectPost.date} />
-                                }
-                                
                             </td>
                         </tr>
                     </tbody>

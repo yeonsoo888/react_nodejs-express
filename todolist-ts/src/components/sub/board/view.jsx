@@ -1,7 +1,10 @@
 import React , {useState} from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 function View({selectPost,setMode,post,setPost}) {
+    const currentUser = useSelector(store => store.memberReducer.member);
+
     const handleDelete = () => {
         fetchRemove();
     }
@@ -42,8 +45,14 @@ function View({selectPost,setMode,post,setPost}) {
             <p className="contents">{selectPost.content}</p>
             <div className="btnWrap">
                 <button onClick={() => {setMode("list")}}>목록으로</button>
-                <button onClick={()=> {handleModify()}}>수정</button>
-                <button onClick={handleDelete}>삭제</button>
+                {
+                    selectPost.writer === currentUser.mail && (
+                        <>
+                            <button onClick={handleDelete}>삭제</button>
+                            <button onClick={()=> {handleModify()}}>수정</button>
+                        </>
+                    )
+                }
             </div>
         </div>
     );

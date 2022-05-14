@@ -56,6 +56,8 @@ export default function Login({setIsLogin}) {
                                 confirmId && <p>ID , PASSWORD를 확인해주세요</p>
                             }
                         </form>
+                        <p>TEST ID : test@test.com</p>
+                        <p>TEST PW : test</p>
                     </div>
                 </div>
             </div>

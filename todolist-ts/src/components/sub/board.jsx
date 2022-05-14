@@ -51,26 +51,29 @@ export default function Board() {
     return (
         <>
             <div className="limit">
-                <div className="subPage">
-                    {
-                        !loading && <Loading/>
-                    }
-                    {
-                        mode == "list" && <List post={post} handleClickBoard={handleClickBoard} />
-                    }
-                    {
-                        mode == "view" && <View post={post} setPost={setPost} selectPost={selectPost} setMode={setMode} />
-                    }
-                    {
-                        mode == "write" && <Write currentUser={currentUser} selectPost={selectPost} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} mode={mode} />
-                    }
-                    {
-                        mode == "modify" && <Write currentUser={currentUser} selectPost={selectPost} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} mode={mode} />
-                    }
-                    <div className="board__btnWrite">
-                        <button className="board__btnWrite" onClick={()=>{setMode("write")}}>글쓰기</button>
-                    </div>
-                </div>
+                {
+                    !loading 
+                    ? <Loading/>
+                    : (
+                        <div className="subPage">
+                            {
+                                mode == "list" && <List post={post} handleClickBoard={handleClickBoard} />
+                            }
+                            {
+                                mode == "view" && <View post={post} setPost={setPost} selectPost={selectPost} setMode={setMode} />
+                            }
+                            {
+                                mode == "write" && <Write currentUser={currentUser} selectPost={selectPost} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} mode={mode} />
+                            }
+                            {
+                                mode == "modify" && <Write currentUser={currentUser} selectPost={selectPost} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} mode={mode} />
+                            }
+                            <div className="board__btnWrite">
+                                <button className="board__btnWrite" onClick={()=>{setMode("write")}}>글쓰기</button>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </>
     );
