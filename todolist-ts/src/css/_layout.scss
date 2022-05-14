@@ -1,25 +1,33 @@
 $main-color : #333;
 
 .limit {
-    max-width: 1220px; padding: 0 10px; margin: 0 auto;
+    max-width: 1220px;
+    padding: 0 10px;
+    margin: 0 auto;
 }
 
 .header {
-    height: 100px; background: $main-color;
+    height: 100px;
+    background: $main-color;
+
     .limit {
         position: relative;
         height: 100%;
     }
+
     .nav {
-        display: flex; align-items: center; height: 100%;
+        display: flex;
+        align-items: center;
+        height: 100%;
 
         .navList {
             display: flex;
             justify-content: center;
             flex: 1;
+
             a {
                 padding: 0 1.5rem;
-                
+
                 span {
                     font-weight: 600;
                     letter-spacing: 0;
@@ -28,14 +36,33 @@ $main-color : #333;
             }
         }
     }
+
     .logo {
-        position: absolute; display: flex; align-items: center; left: 10px; top: 0; height: 100%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        left: 10px;
+        top: 0;
+        height: 100%;
+
         span {
-            color: #fff; font-size: 1.5rem; font-weight: 700;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
     }
 
-    button {position: absolute; right: 10px; top: 50%; transform: translate(0,-50%); background: #fff; border: none; padding: 0.5rem; font-weight: 700; font-size: 1rem;}
+    button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translate(0, -50%);
+        background: #fff;
+        border: none;
+        padding: 0.5rem;
+        font-weight: 700;
+        font-size: 1rem;
+    }
 }
 
 .footer {
@@ -45,143 +72,285 @@ $main-color : #333;
 
 
 .subPage {
-    padding : 1rem 0; min-height: 500px;
+    padding: 1rem 0;
+    min-height: 500px;
 
     .subTit {
-        text-align: center; font-size: 2rem; 
+        text-align: center;
+        font-size: 2rem;
     }
 }
 
 .loginWrap {
-    max-width: 500px; margin: 1rem auto 0; border: 1px solid #999; padding: 1rem; border-radius: 5px;
+    max-width: 500px;
+    margin: 1rem auto 0;
+    border: 1px solid #999;
+    padding: 1rem;
+    border-radius: 5px;
+
     input {
-        width: 100%; height: 2rem; padding: 0 0.5rem; border: 1px solid #ddd;
-        & + input {margin: 0.5rem 0 0;}
+        width: 100%;
+        height: 2rem;
+        padding: 0 0.5rem;
+        border: 1px solid #ddd;
+
+        &+input {
+            margin: 0.5rem 0 0;
+        }
     }
+
     button {
-        width: 100%; background: $main-color; margin: 0.5rem 0 0; height: 3rem; color: #fff; font-size: 1.5rem; font-weight: 500;
+        width: 100%;
+        background: $main-color;
+        margin: 0.5rem 0 0;
+        height: 3rem;
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 500;
     }
 }
 
 .youtubeList {
-    display: flex; flex-wrap: wrap; max-width: 700px; margin: 0 auto; 
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto;
+
     li {
-        width: calc((100% - 10px) / 2); margin: 0 10px 20px 0; cursor: pointer;
+        width: calc((100% - 10px) / 2);
+        margin: 0 10px 20px 0;
+        cursor: pointer;
+
         &:nth-of-type(2n) {
             margin: 0 0 20px;
         }
-        
+
         img {
             width: 100%;
         }
+
         .youtube {
             &__tit {
-                font-size: 1.5rem; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+                font-size: 1.5rem;
+                display: block;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
             }
+
             &__txt {
-                font-size: 1rem; 
+                font-size: 1rem;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
-                -webkit-line-clamp: 3; /* 라인수 */
+                -webkit-line-clamp: 3;
+                /* 라인수 */
                 -webkit-box-orient: vertical;
-                word-wrap:break-word; 
+                word-wrap: break-word;
                 line-height: 1.2em;
-                height: 3.6em; 
+                height: 3.6em;
             }
         }
     }
 }
 
 .boardList {
-    max-width: 800px; margin: 0 auto; border-top: 2px solid #333;
+    max-width: 800px;
+    margin: 0 auto;
+    border-top: 2px solid #333;
+
     li {
-        display: flex; justify-content: space-between;
-        border-bottom: 1px solid #ddd; cursor: pointer;
-        padding: 1rem; transition: .3s ease;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        padding: 1rem;
+        transition: .3s ease;
+
         &:hover {
             background: #ddd;
         }
-        strong {display: block; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1rem;}
-        p {font-size: 0.875rem;}
+
+        strong {
+            display: block;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+
+        p {
+            font-size: 0.875rem;
+        }
     }
 }
+
 .boardView {
     .titWrap {
-        padding: 1rem 1rem; border-top: 2px solid #333; border-bottom: 1px solid #ddd;
+        padding: 1rem 1rem;
+        border-top: 2px solid #333;
+        border-bottom: 1px solid #ddd;
+
         h4 {
-            font-size: 1.5rem; margin: 0 0 0.5rem;
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem;
         }
+
         ul {
             display: flex;
-            
-            li + li {
+
+            li+li {
                 margin: 0 0 0 1rem;
             }
         }
     }
+
     .contents {
-        padding: 2rem 1rem 1rem; border-bottom: 1px solid #ddd; margin: 0 0 1rem;
+        padding: 2rem 1rem 1rem;
+        border-bottom: 1px solid #ddd;
+        margin: 0 0 1rem;
     }
+
     .btnWrap {
         text-align: center;
 
         button {
-            background: #333; border: none; font-size: 1rem; padding: 0.5rem 1rem; color: #fff;
-            font-weight: 500; 
-            & + button {margin: 0 0 0 1rem;}
+            background: #333;
+            border: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            color: #fff;
+            font-weight: 500;
+
+            &+button {
+                margin: 0 0 0 1rem;
+            }
         }
     }
 }
+
 .boardWrite {
-    max-width: 800px; margin: 0 auto;
+    max-width: 800px;
+    margin: 0 auto;
+
     table {
-        width: 100%; border-top: 2px solid #333;
+        width: 100%;
+        border-top: 2px solid #333;
+
         tr {
             border-bottom: 1px solid #ddd;
-            > * {
+
+            >* {
                 border-right: 1px solid #ddd;
                 padding: 0.5rem;
+
                 &:last-child {
                     border: none;
                 }
             }
+
             th {
                 width: 100px;
                 background: #f7f7f7;
             }
+
             td {
+
                 textarea,
                 input {
-                    border: 1px solid #ddd; height: 2.2rem; width: 100%; padding: 0 0.5rem;
+                    border: 1px solid #ddd;
+                    height: 2.2rem;
+                    width: 100%;
+                    padding: 0 0.5rem;
                 }
+
                 textarea {
                     height: 200px;
                 }
             }
         }
     }
-    
+
 }
 
 .board__btnWrite {
-    text-align: center; margin: 2rem 0 0;
+    text-align: center;
+    margin: 2rem 0 0;
+
     button {
-        background: #333; border: none; color: #fff; width: 10rem; height: 2rem; font-size: 1rem; font-weight: 500;
+        background: #333;
+        border: none;
+        color: #fff;
+        width: 10rem;
+        height: 2rem;
+        font-size: 1rem;
+        font-weight: 500;
     }
 }
 
 
 .popUp {
-    position: fixed; left:0; top: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8); cursor: pointer;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+
     .inner {
-        background: #fff; padding: 2rem; margin: 5rem auto ; max-width: 1024px; width: 100%; cursor: auto;
+        background: #fff;
+        padding: 2rem;
+        margin: 5rem auto;
+        max-width: 1024px;
+        width: 100%;
+        cursor: auto;
     }
+
     .youtubeWrap {
-        position: relative; width: 100%; padding-bottom: 56.25%;
-        
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+
         iframe {
-            position: absolute; width: 100%; height: 100%; left: 0; top: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+    }
+}
+
+.loadingWrap {
+    display: flex; align-items: center; justify-content: center;    
+    min-height: 500px;
+    .lds-dual-ring {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #999;
+        border-color: #999 transparent #999 transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+    
+    @keyframes lds-dual-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+    
+        100% {
+            transform: rotate(360deg);
         }
     }
 }

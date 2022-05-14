@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import List from "./board/list";
 import View from "./board/view";
 import Write from "./board/write";
+import Loading from "../common/loading";
+
 export default function Board() {
     const currentUser = useSelector(store => store.memberReducer.member);
     const [post, setPost] = useState([]);
+    const [loading,setLoading] = useState(false);
     const [selectPost, setSelectPost] = useState({
-        id: null,
+        _id: null,
         title: null,
         content: null,
         date: null,
@@ -21,6 +24,7 @@ export default function Board() {
         await axios.get('list')
             .then(response => {
                 setPost(response.data.reverse());
+                setLoading(true);
             })
             .catch(err => {
                 console.log(err);
@@ -30,7 +34,7 @@ export default function Board() {
     const handleClickBoard = (idx) => {
         const target = post[idx];
         const newSelectPost = {
-            id: target._id,
+            _id: target._id,
             title: target.title,
             content: target.content,
             writer: target.writer,
@@ -49,13 +53,19 @@ export default function Board() {
             <div className="limit">
                 <div className="subPage">
                     {
+                        !loading && <Loading/>
+                    }
+                    {
                         mode == "list" && <List post={post} handleClickBoard={handleClickBoard} />
                     }
                     {
-                        mode == "view" && <View selectPost={selectPost} setMode={setMode} />
+                        mode == "view" && <View post={post} setPost={setPost} selectPost={selectPost} setMode={setMode} />
                     }
                     {
-                        mode == "write" && <Write currentUser={currentUser} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} />
+                        mode == "write" && <Write currentUser={currentUser} selectPost={selectPost} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} mode={mode} />
+                    }
+                    {
+                        mode == "modify" && <Write currentUser={currentUser} selectPost={selectPost} setMode={setMode} setSelectPost={setSelectPost} post={post} setPost={setPost} mode={mode} />
                     }
                     <div className="board__btnWrite">
                         <button className="board__btnWrite" onClick={()=>{setMode("write")}}>글쓰기</button>

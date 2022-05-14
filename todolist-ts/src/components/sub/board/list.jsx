@@ -5,8 +5,6 @@ function List({post,handleClickBoard}) {
     const currentUser = useSelector(store => store.memberReducer.member);
     const [modeMypost,setModeMyPost] = useState(false);
 
-
-
     return (
         <>
             <ul className="boardList">

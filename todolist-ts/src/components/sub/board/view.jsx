@@ -1,12 +1,13 @@
+import React , {useState} from "react";
 import axios from "axios";
-import React from "react";
 
-function View({selectPost,setMode}) {
-
-
+function View({selectPost,setMode,post,setPost}) {
     const handleDelete = () => {
-        console.log('삭제')
-        fetchRemove()
+        fetchRemove();
+    }
+
+    const handleModify = () => {
+        setMode("modify");
     }
 
     const fetchRemove = async () => {
@@ -15,15 +16,18 @@ function View({selectPost,setMode}) {
             credentials: 'include',
             url: '/delete',
             data: {
-                _id: selectPost.id
+                _id: selectPost._id
             }
         }).then(res => {
-            console.log(res);
+            const removalItemId = res.data.targetId
+            setPost(() => {
+                return post.filter(item => item._id !== removalItemId);
+            });
+            setMode("list");
         }).catch(err => {
             console.log(err);
         })
     }
-
 
     return (
         <div className="boardView">
@@ -38,6 +42,7 @@ function View({selectPost,setMode}) {
             <p className="contents">{selectPost.content}</p>
             <div className="btnWrap">
                 <button onClick={() => {setMode("list")}}>목록으로</button>
+                <button onClick={()=> {handleModify()}}>수정</button>
                 <button onClick={handleDelete}>삭제</button>
             </div>
         </div>

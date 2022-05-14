@@ -10,6 +10,7 @@ function Youtube() {
             videoId : null,
         }
     })
+
     const selectVideo = (idx) => {
         setSelectedVid(youtubeList[idx]);
     }

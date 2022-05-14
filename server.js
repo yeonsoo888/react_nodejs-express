@@ -77,11 +77,29 @@ app.post('/add', (req, res) => {
 
 app.delete('/delete', function(req, res){
     req.body._id = parseInt(req.body._id)
-    console.log(req.body);
-    db.collection('post').deleteOne(req.body, function(에러, 결과){
+    const targetId = req.body._id;
+    db.collection('post').deleteOne(req.body, function(err, result){
         console.log('삭제완료')
     })
-    res.send('삭제완료')
+    res.send({
+        targetId,
+    });
+});
+
+app.put('/modify', function(req, res){
+    console.log(req.body);
+    req.body._id = parseInt(req.body._id);
+    db.collection('post').updateOne( 
+        {_id : req.body._id}, 
+        {$set : 
+            { 
+                title : req.body.title, 
+                content: req.body.content,
+                date : req.body.date,
+            }
+        }, function(){
+        res.send("수정완료");
+    });
 });
 
 app.post('/login', function(req, res){
