@@ -1,15 +1,17 @@
 import React, { useState ,useEffect } from "react";
 import { useSelector } from "react-redux";
 
-function List({post,handleClickBoard}) {
+function List({handleClickBoard}) {
     const currentUser = useSelector(store => store.memberReducer.member);
+    const { board } = useSelector(store => store.boardReducer);
+
     const [modeMypost,setModeMyPost] = useState(false);
 
     return (
         <>
             <ul className="boardList">
                 {
-                    post.map((item,idx) => {
+                    board.map((item,idx) => {
                         if(!modeMypost) {
                             return (
                                 <li key={item._id} onClick={() => {handleClickBoard(idx)}}>

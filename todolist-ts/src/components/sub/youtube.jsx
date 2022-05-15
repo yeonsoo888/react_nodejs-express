@@ -1,9 +1,25 @@
 import React, { useEffect, useRef , useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Popup from "../common/popup";
+import YoutubeServ from "../../service/youtube";
 
 function Youtube() {
     const popUp = useRef(null);
+    const dispatch = useDispatch();
+
+    const youtube = new YoutubeServ(process.env.REACT_APP_YOUTUBE_KEY,{
+        maxLength: 10,
+        search: "프론트엔드 개발",
+    });
+    useEffect(() => {
+        youtube.mostPopular()
+        .then(res=>{
+            dispatch({type:"setYoutube", payload: res});
+        })
+    },[])
+    
+
+
     const youtubeList = useSelector(store => store.youtubeReducer.youtube);
     const [selectedVid,setSelectedVid] = useState({
         id : {

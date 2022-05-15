@@ -1,4 +1,4 @@
-import React ,{ useEffect} from 'react';
+import React ,{ useState,useEffect, useRef} from 'react';
 import { Route, Switch } from 'react-router';
 
 import Header from './components/common/header';
@@ -6,44 +6,38 @@ import Footer from './components/common/footer';
 import Login from './components/sub/login';
 import Youtube from './components/sub/youtube';
 import Board from './components/sub/board';
+import Loading from './components/common/loading';
 
 import store from './redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import jwt_decode from "jwt-decode";
 
-import YoutubeServ from './service/youtube';
+
 
 import './css/style.scss';
+import { BoardServ } from './service/board';
 
 function App() {
   const dispatch = useDispatch();
-  const currentMember = useSelector(store => store.memberReducer.member);
+  const {member} = useSelector(store => store.memberReducer);
+  const { board } = useSelector(store => store.boardReducer);
+  
+  const loading = useRef(null);
+  
+  const boardServ = new BoardServ();
 
-  // 최초 접속시 loalstorage에 로그인 토큰이 있는지 확인 후 로그인 처리
   useEffect(() => {
     let nowToken = localStorage.getItem("jwtToken");
     if(nowToken == null) return;
     let userInfo = jwt_decode(nowToken);
     dispatch({type: "loginMember",payload:{mail:userInfo.mail}})
+
+    boardServ.fetchBoard('get','/list')
+    .then(response => {
+        dispatch({type: "setBoard",payload: response.data.reverse()})
+        loading.current.done();
+    })
   },[]);
-  
-  const youtube = new YoutubeServ(process.env.REACT_APP_YOUTUBE_KEY,{
-    maxLength: 10,
-    search: "프론트엔드 개발",
-  });
-
-  const fetchPopularYoutube = async () => {
-    await youtube.mostPopular()
-      .then(res=>{
-        dispatch({type:"setYoutube", payload: res});
-      })
-  }
-
-  useEffect(()=>{
-    fetchPopularYoutube();
-  },[]);
-
-
 
   return (
     <div className="App">
@@ -51,14 +45,39 @@ function App() {
       <Switch>
         <Route exact path='/'>
             {
-              currentMember.mail == undefined 
+              member.mail == undefined 
               ? <Login />
               : (
                   <div className="subPage" style={{textAlign: "center",}}>
-                    <strong style={{fontSize:"1.5rem"}}>환영합니다 {currentMember.mail} 님!</strong>
+                    <strong style={{fontSize:"1.5rem"}}>환영합니다 {member.mail} 님!</strong>
+                    <Loading ref={loading}/>
+                    <div>
+                      <h6 className='mainTit'>최신글</h6>
+                      <ul className='main__latest'>
+                        {
+                          board.map((item,idx) => {
+                            if(idx <= 5) {
+                              return (
+                                <li className='latest__item' key={item._id}>
+                                  <div>
+                                    <p>제목 : {item.title}</p>
+                                    <span>내용 : {item.content}</span>
+                                  </div>
+                                  <ul>
+                                    <li>작성일 : {item.date}</li>
+                                    <li>작성자 : {item.writer}</li>
+                                  </ul>
+                                </li>
+                              )
+                            }
+                          })
+                        }
+                      </ul>
+                    </div>
                   </div>
               )
             }
+
         </Route>
       </Switch>
       <Route path='/youtube'>

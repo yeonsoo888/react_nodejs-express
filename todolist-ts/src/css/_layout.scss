@@ -6,6 +6,8 @@ $main-color : #333;
     margin: 0 auto;
 }
 
+
+
 .header {
     height: 100px;
     background: $main-color;
@@ -78,6 +80,33 @@ $main-color : #333;
     .subTit {
         text-align: center;
         font-size: 2rem;
+    }
+}
+.mainTit {
+    margin: 2rem auto 0; font-size: 2rem; text-align: left; max-width: 800px;
+}
+
+.main__latest {
+    max-width: 800px; margin: 0 auto; border-top: 2px solid #333;
+    .latest__item {
+        display: flex; flex-wrap: wrap; border-bottom: 1px solid #ddd; padding: 0.5rem;
+        div {
+            width: 100%;
+            text-align: left;
+            text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+            p {
+                font-size: 1.125rem; font-weight: 500; margin: 0 0 0.3rem;
+            }
+            span {
+                font-size: 1rem; font-weight: 400; color: #666;
+            }
+        }
+        ul {
+            display: flex; margin: 0.5rem 0 0;
+            li {
+                & + li {margin: 0 0 0 0.5rem;}
+            }
+        }
     }
 }
 
@@ -187,6 +216,7 @@ $main-color : #333;
 }
 
 .boardView {
+    max-width: 800px; margin: 0 auto;
     .titWrap {
         padding: 1rem 1rem;
         border-top: 2px solid #333;
@@ -286,6 +316,9 @@ $main-color : #333;
         height: 2rem;
         font-size: 1rem;
         font-weight: 500;
+        & + button {
+            margin: 0 0 0 0.6rem;
+        }
     }
 }
 

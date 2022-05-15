@@ -1,7 +1,5 @@
 import React , {useState} from "react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRemove } from "../../../service/board";
 import { BoardServ } from "../../../service/board";
 
 function View({selectPost,setMode}) {
@@ -9,7 +7,6 @@ function View({selectPost,setMode}) {
     const post = useSelector(store => store.boardReducer.board);
     const dispatch = useDispatch();
     const board = new BoardServ();
-
     const handleDelete = () => {
         board.fetchBoard(
             'delete',

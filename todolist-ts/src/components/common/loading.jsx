@@ -1,11 +1,24 @@
-import React from "react";
+import React , { useEffect, forwardRef,useImperativeHandle, useState} from "react";
 
-function Loading() {
+const Loading = forwardRef((props,ref) => {
+    const [loading,setLoading] = useState(true)
+    useImperativeHandle(ref, () => {
+        return {
+            loading: () => setLoading(true),
+            done: () => setLoading(false)
+        }
+    })
+
+
     return <>
-        <div className="loadingWrap">
-            <div className="lds-dual-ring"></div>
-        </div>
+        {
+            loading && (
+                <div className="loadingWrap">
+                    <div className="lds-dual-ring"></div>
+                </div>
+            )
+        }
     </>;
-}
+})
 
 export default Loading;

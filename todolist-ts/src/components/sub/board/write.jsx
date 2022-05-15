@@ -1,8 +1,6 @@
-import axios from "axios";
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BoardServ } from "../../../service/board";
-import { fecthWrite , fetchModify } from "../../../service/board";
 
 export default function Write({currentUser,setMode,mode,selectPost}) {
     const post = useSelector(store => store.boardReducer.board);
@@ -109,8 +107,10 @@ export default function Write({currentUser,setMode,mode,selectPost}) {
                         </tr>
                     </tbody>
                 </table>
-                <button type="button" onClick={() => setMode("list")}>목록</button>
-                <button type="submit">작성완료</button>
+                <div className="board__btnWrite">
+                    <button type="button" onClick={() => setMode("list")}>목록</button>
+                    <button type="submit">작성완료</button>
+                </div>
             </form>
         </div>
     );
