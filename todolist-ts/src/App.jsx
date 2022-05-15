@@ -7,6 +7,7 @@ import Login from './components/sub/login';
 import Youtube from './components/sub/youtube';
 import Board from './components/sub/board';
 import Loading from './components/common/loading';
+import Chat from './components/main/chat';
 
 import store from './redux/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,9 +36,9 @@ function App() {
     boardServ.fetchBoard('get','/list')
     .then(response => {
         dispatch({type: "setBoard",payload: response.data.reverse()})
-        loading.current.done();
     })
-  },[]);
+  },[board]);
+
 
   return (
     <div className="App">
@@ -50,7 +51,6 @@ function App() {
               : (
                   <div className="subPage" style={{textAlign: "center",}}>
                     <strong style={{fontSize:"1.5rem"}}>환영합니다 {member.mail} 님!</strong>
-                    <Loading ref={loading}/>
                     <div>
                       <h6 className='mainTit'>최신글</h6>
                       <ul className='main__latest'>
@@ -74,10 +74,11 @@ function App() {
                         }
                       </ul>
                     </div>
+                    <Chat />
+
                   </div>
               )
             }
-
         </Route>
       </Switch>
       <Route path='/youtube'>
