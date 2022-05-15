@@ -12,6 +12,7 @@ export default function Board() {
     const currentUser = useSelector(store => store.memberReducer.member);
     const post = useSelector(store => store.boardReducer.board);
     const dispatch = useDispatch();
+    
     const [loading,setLoading] = useState(false);
     const [selectPost, setSelectPost] = useState({
         _id: null,
@@ -66,9 +67,13 @@ export default function Board() {
                             {
                                 mode == "modify" && <Write currentUser={currentUser} selectPost={selectPost} setMode={setMode} setSelectPost={setSelectPost} post={post} mode={mode} />
                             }
-                            <div className="board__btnWrite">
-                                <button className="board__btnWrite" onClick={()=>{setMode("write")}}>글쓰기</button>
-                            </div>
+                            {
+                                mode !== "write" && (
+                                    <div className="board__btnWrite">
+                                        <button className="board__btnWrite" onClick={()=>{setMode("write")}}>글쓰기</button>
+                                    </div>
+                                )
+                            }
                         </div>
                     )
                 }

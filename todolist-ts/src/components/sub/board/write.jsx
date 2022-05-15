@@ -1,9 +1,13 @@
 import axios from "axios";
 import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BoardServ } from "../../../service/board";
 import { fecthWrite , fetchModify } from "../../../service/board";
 
-export default function Write({currentUser,setMode,setPost,post,mode,selectPost}) {
+export default function Write({currentUser,setMode,mode,selectPost}) {
+    const post = useSelector(store => store.boardReducer.board);
+    const dispatch = useDispatch();
+
     const idInput = useRef(null);
     const titInput = useRef(null);
     const cntsInput = useRef(null);
@@ -34,8 +38,8 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
                 },
                 ...post,
             ];
+            dispatch({type:"setBoard", payload:newPost})
             setMode("list");
-            setPost(newPost);
         });
     }
 
@@ -52,15 +56,14 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
             }
         )
         .then(res => {
-            setPost(() => {
-                return post.map(item => {
-                    if(item._id === parseInt(idInput.current.value)) {
-                        item.title = titInput.current.value;
-                        item.content = cntsInput.current.value;
-                    }
-                    return item;
-                })
-            });
+            const modifyPost = post.map(item => {
+                if(item._id === parseInt(idInput.current.value)) {
+                    item.title = titInput.current.value;
+                    item.content = cntsInput.current.value;
+                }
+                return item;
+            })
+            dispatch({type:"setBoard", payload:modifyPost})
             setMode('list');
         });
     }

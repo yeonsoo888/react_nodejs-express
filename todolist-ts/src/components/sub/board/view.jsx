@@ -1,11 +1,13 @@
 import React , {useState} from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchRemove } from "../../../service/board";
 import { BoardServ } from "../../../service/board";
 
-function View({selectPost,setMode,post,setPost}) {
+function View({selectPost,setMode}) {
     const currentUser = useSelector(store => store.memberReducer.member);
+    const post = useSelector(store => store.boardReducer.board);
+    const dispatch = useDispatch();
     const board = new BoardServ();
 
     const handleDelete = () => {
@@ -17,10 +19,8 @@ function View({selectPost,setMode,post,setPost}) {
             }
         )
         .then(res => {
-            const removalItemId = res.data.targetId
-            setPost(() => {
-                return post.filter(item => item._id !== removalItemId);
-            });
+            const removeBoard = post.filter(item => item._id !== res.data.targetId)
+            dispatch({type:'setBoard',payload:removeBoard})
             setMode("list");
         });
     };
