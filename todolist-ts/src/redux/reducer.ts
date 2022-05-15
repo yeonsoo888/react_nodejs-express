@@ -27,9 +27,19 @@ const youtubeReducer = (state:object = {youtube:[]}, action: Action) => {
     }
 }
 
+const boardReducer = (state:object = {board:[]}, action: Action) => {
+    switch (action.type) {
+        case "setBoard" :
+            return {...state, board: action.payload};
+        default : 
+            return state;
+    }
+}
+
 const reducers = combineReducers({
     memberReducer,
     youtubeReducer,
+    boardReducer,
 })
 
 export default reducers

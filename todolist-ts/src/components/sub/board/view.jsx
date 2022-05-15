@@ -1,36 +1,29 @@
 import React , {useState} from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { fetchRemove } from "../../../service/board";
+import { BoardServ } from "../../../service/board";
 
 function View({selectPost,setMode,post,setPost}) {
     const currentUser = useSelector(store => store.memberReducer.member);
+    const board = new BoardServ();
 
     const handleDelete = () => {
-        fetchRemove();
-    }
-
-    const handleModify = () => {
-        setMode("modify");
-    }
-
-    const fetchRemove = async () => {
-        await axios({
-            method : 'delete',
-            credentials: 'include',
-            url: '/delete',
-            data: {
+        board.fetchBoard(
+            'delete',
+            '/delete',
+            {
                 _id: selectPost._id
             }
-        }).then(res => {
+        )
+        .then(res => {
             const removalItemId = res.data.targetId
             setPost(() => {
                 return post.filter(item => item._id !== removalItemId);
             });
             setMode("list");
-        }).catch(err => {
-            console.log(err);
-        })
-    }
+        });
+    };
 
     return (
         <div className="boardView">
@@ -49,7 +42,7 @@ function View({selectPost,setMode,post,setPost}) {
                     selectPost.writer === currentUser.mail && (
                         <>
                             <button onClick={handleDelete}>삭제</button>
-                            <button onClick={()=> {handleModify()}}>수정</button>
+                            <button onClick={()=> {setMode("modify");}}>수정</button>
                         </>
                     )
                 }

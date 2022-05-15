@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useRef } from "react";
+import { BoardServ } from "../../../service/board";
+import { fecthWrite , fetchModify } from "../../../service/board";
 
 export default function Write({currentUser,setMode,setPost,post,mode,selectPost}) {
     const idInput = useRef(null);
@@ -7,18 +9,20 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
     const cntsInput = useRef(null);
     const writerInput = useRef(null);
     const today = new Date()
-    const fecthWrite = async () => {
-        await axios({
-            method: 'post',
-            credentials: 'include',
-            url: "/add",
-            data: {
+    const board = new BoardServ();
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        board.fetchBoard(
+            'post',
+            '/add',
+            {
                 title: titInput.current.value,
                 content: cntsInput.current.value,
                 date: today.toLocaleDateString(),
                 writer : writerInput.current.value,
             }
-        })
+        )
         .then(res => {
             const newPost = [
                 {
@@ -32,24 +36,21 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
             ];
             setMode("list");
             setPost(newPost);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        });
     }
 
-    const fetchModify = async () => {
-        await axios({
-            method: "put",
-            url: "/modify",
-            credentials: 'include',
-            data: {
+    const handleModify = (e) => {
+        e.preventDefault();
+        board.fetchBoard(
+            'put',
+            '/modify',
+            {
                 _id: idInput.current.value,
                 title: titInput.current.value,
                 content: cntsInput.current.value,
                 writer : writerInput.current.value,
             }
-        })
+        )
         .then(res => {
             setPost(() => {
                 return post.map(item => {
@@ -61,20 +62,7 @@ export default function Write({currentUser,setMode,setPost,post,mode,selectPost}
                 })
             });
             setMode('list');
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        fecthWrite();
-    }
-
-    const handleModify = (e) => {
-        e.preventDefault();
-        fetchModify();
+        });
     }
 
     return (
