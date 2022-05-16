@@ -1,7 +1,8 @@
-import axios from "axios";
 import React, { useRef , useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
+
+import { Member } from "../../service/member";
 
 export default function Login({setIsLogin}) {
     const inputMail = useRef(null);
@@ -9,25 +10,23 @@ export default function Login({setIsLogin}) {
     const dispatch = useDispatch()
     const [confirmId,setConfirmId] = useState(false);
 
-    const fetchLogin = async () =>  {
+    const member = new Member();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
         let mailValue = inputMail.current.value;
         let pwValue = inputPw.current.value;
 
-        await axios({
-            method: 'post',
-            credentials: 'include',
-            url: "/login",
-            data : {
-                mail : mailValue,
-                pw : pwValue
-            },
+        member.login('post','/login',{
+            mail : mailValue,
+            pw : pwValue
         })
         .then((res) => {
-            console.log(res)
             const token = res.data;
             localStorage.setItem("jwtToken",token);
             let userInfo = jwt_decode(token);
-            dispatch({type: "loginMember",payload: {mail:userInfo.mail}});
+            console.log(userInfo);
+            dispatch({type: "loginMember",payload: {mail:userInfo.mail,id: userInfo.userId}});
         })
         .catch(err => {
             setConfirmId(true);
@@ -35,11 +34,6 @@ export default function Login({setIsLogin}) {
                 setConfirmId(false);
             },2000);
         });
-    };
-
-    const handleLogin = (e) => {
-        e.preventDefault();
-        fetchLogin();
     }
 
     return (

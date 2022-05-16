@@ -14,6 +14,8 @@ const session = require('express-session');
 
 const jwt = require("jsonwebtoken");
 
+const { ObjectId } = require('mongodb');
+
 app.use(session({secret : 'secretCode', resave : true, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session()); 
@@ -103,8 +105,10 @@ app.put('/modify', function(req, res){
 app.post('/login', function(req, res){
     db.collection('member').findOne({mail: req.body.mail},function(err,result) {
         if(result) {
-            const mail = req.body.mail;
+            const mail = result.mail;
+            const userId = result._id;
             const token = jwt.sign({
+                userId,
                 mail,
             }, "scretCode", {
                 expiresIn: '1m', // 1분
@@ -116,6 +120,40 @@ app.post('/login', function(req, res){
         }
     });
 });
+
+app.post('/chat', function(req, res){
+    let data = {
+        title : `${ObjectId(req.body.userId)} 채팅방`,
+        owner: ObjectId(req.body.userId),
+        target : ObjectId('6268c6ecc45a69b8d4fe481f'),
+        date : new Date()
+    }
+    db.collection('chat').findOne({owner : ObjectId(req.body.userId)},function(err,result) {
+        if(!result) {
+            db.collection('chat').insertOne(data).then(function(result2){
+                res.send('방만듦');
+            });
+        } else {
+            let chatRoomInfo = {
+                roomId : result._id
+            }
+            res.send(chatRoomInfo)
+        }
+    })
+});
+
+app.post('/message', function(req, res){
+    let data = {
+        parent : req.body.parent,
+        userid : req.user._id,
+        content : req.body.content,
+        date : new Date(),
+    }
+    db.collection('message').insertOne(data)
+    .then(result => {
+        res.send(result);
+    })
+}); 
 
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));

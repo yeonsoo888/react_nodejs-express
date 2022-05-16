@@ -1,4 +1,4 @@
-import React ,{ useState,useEffect, useRef} from 'react';
+import React ,{ useState,useEffect} from 'react';
 import { Route, Switch } from 'react-router';
 
 import Header from './components/common/header';
@@ -19,25 +19,23 @@ import './css/style.scss';
 import { BoardServ } from './service/board';
 
 function App() {
+  const [chatStatus,setChatStatus] = useState(false);
   const dispatch = useDispatch();
+  
   const {member} = useSelector(store => store.memberReducer);
   const { board } = useSelector(store => store.boardReducer);
-  
-  const loading = useRef(null);
-  
   const boardServ = new BoardServ();
 
   useEffect(() => {
     let nowToken = localStorage.getItem("jwtToken");
     if(nowToken == null) return;
     let userInfo = jwt_decode(nowToken);
-    dispatch({type: "loginMember",payload:{mail:userInfo.mail}})
-
+    dispatch({type: "loginMember",payload:{mail:userInfo.mail,id:userInfo.userId}})
     boardServ.fetchBoard('get','/list')
     .then(response => {
-        dispatch({type: "setBoard",payload: response.data.reverse()})
+        dispatch({type: "setBoard",payload: response.data.reverse()});
     })
-  },[board]);
+  },[]);
 
 
   return (
@@ -74,8 +72,11 @@ function App() {
                         }
                       </ul>
                     </div>
-                    <Chat />
-
+                    {
+                      chatStatus 
+                      ? <Chat />
+                      : <button onClick={() => {setChatStatus(true)}} className='btn__chat'>CHAT</button>
+                    }
                   </div>
               )
             }

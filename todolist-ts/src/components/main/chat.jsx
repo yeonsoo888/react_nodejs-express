@@ -1,6 +1,44 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import store from "../../redux/store";
+import { Chatserv } from "../../service/chat";
 
 function Chat() {
+    const {member} = useSelector(store => store.memberReducer);
+    const [rommNum,setRommNum] = useState(0);
+
+    const elTextarea = useRef(null);
+
+    const chat = new Chatserv();
+
+    const sendMessage = (e) => {
+        console.log("ok");
+        e.preventDefault();
+        chat.chatServ('post','/message',{
+            parent : rommNum,
+            userid: member.id,
+            content: elTextarea.current.value,
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => {
+            
+        })
+    }
+
+    useEffect(() => {
+        chat.chatServ('post','/chat',{
+            userId: member.id,
+        })
+        .then(response => {
+            setRommNum(response.data.roomId);
+        })
+        .catch(err => {
+            console.log(err);  
+        })
+    },[])
+
     return (
         <>
             <div className="btnChatWrap">
@@ -33,10 +71,10 @@ function Chat() {
                             </li>
                         </ul>
                     </div>
-                    <form>
+                    <form onSubmit={(e) => {sendMessage(e)}}>
                         <div className="chat__inputWrap">
-                            <textarea name="" id=""></textarea>
-                            <button>글쓰기</button>
+                            <textarea name="" ref={elTextarea}></textarea>
+                            <button >글쓰기</button>
                         </div>
                     </form>
                 </div>
