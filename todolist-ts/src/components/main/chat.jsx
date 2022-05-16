@@ -5,17 +5,19 @@ import { Chatserv } from "../../service/chat";
 
 function Chat() {
     const {member} = useSelector(store => store.memberReducer);
-    const [rommNum,setRommNum] = useState(0);
+    const [romNum,setRomNum] = useState(0);
+    const [chatList,setChatList] = useState([]);
 
+    console.log(member);
     const elTextarea = useRef(null);
 
     const chat = new Chatserv();
 
     const sendMessage = (e) => {
-        console.log("ok");
+        console.log(elTextarea.current.value);
         e.preventDefault();
         chat.chatServ('post','/message',{
-            parent : rommNum,
+            parent : romNum,
             userid: member.id,
             content: elTextarea.current.value,
         })
@@ -32,13 +34,13 @@ function Chat() {
             userId: member.id,
         })
         .then(response => {
-            setRommNum(response.data.roomId);
+            setRomNum(response.data[0].roomId);
+            setChatList(response.data[1]);
         })
         .catch(err => {
             console.log(err);  
         })
     },[])
-
     return (
         <>
             <div className="btnChatWrap">
@@ -48,27 +50,31 @@ function Chat() {
                 <div className="chat__inner">
                     <div className="chat__listWrap">
                         <ul className="chat__list">
-                            <li className="onwer">
-                                <div>
-                                    <strong>이름</strong>
-                                    <p>채팅내용</p>
-                                    <span>2020.05.15 22:08</span>
-                                </div>
-                            </li>
-                            <li className="admin">
-                                <div>
-                                    <strong>이름</strong>
-                                    <p>채팅내용</p>
-                                    <span>2020.05.15 22:08</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <strong>이름</strong>
-                                    <p>채팅내용</p>
-                                    <span>2020.05.15 22:08</span>
-                                </div>
-                            </li>
+                            {
+                                chatList.map((item,idx) => {
+                                    if(member.id == item.userid) {
+                                        return (
+                                            <li className="onwer" key={idx}>
+                                                <div>
+                                                    <strong>{member.mail}</strong>
+                                                    <p>{item.content}</p>
+                                                    <span>{item.date}</span>
+                                                </div>
+                                            </li>
+                                        )
+                                    } else {
+                                        return (
+                                            <li className="admin" key={idx}>
+                                                <div>
+                                                    <strong>{item.id}</strong>
+                                                    <p>{item.content}</p>
+                                                    <span>{item.date}</span>
+                                                </div>
+                                            </li>
+                                        )
+                                    }
+                                })
+                            }
                         </ul>
                     </div>
                     <form onSubmit={(e) => {sendMessage(e)}}>

@@ -134,10 +134,12 @@ app.post('/chat', function(req, res){
                 res.send('방만듦');
             });
         } else {
-            let chatRoomInfo = {
-                roomId : result._id
-            }
-            res.send(chatRoomInfo)
+            let roomId = String(result._id); 
+            
+            db.collection('message').find({parent: roomId}).toArray()
+            .then(result2 => {
+                res.send([{roomId : roomId},result2]);
+            })
         }
     })
 });
@@ -145,7 +147,7 @@ app.post('/chat', function(req, res){
 app.post('/message', function(req, res){
     let data = {
         parent : req.body.parent,
-        userid : req.user._id,
+        userid : req.body.userid,
         content : req.body.content,
         date : new Date(),
     }
