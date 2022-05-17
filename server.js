@@ -8,6 +8,9 @@ const MongoClient = require('mongodb').MongoClient;
 
 const http = require('http').createServer(app);
 
+const { Server } = require("socket.io");
+const io = new Server(http);
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
@@ -15,6 +18,8 @@ const session = require('express-session');
 const jwt = require("jsonwebtoken");
 
 const { ObjectId } = require('mongodb');
+
+
 
 app.use(session({secret : 'secretCode', resave : true, saveUninitialized: false}));
 app.use(passport.initialize());
@@ -40,10 +45,10 @@ MongoClient.connect('mongodb+srv://admin:qwer1234@cluster0.rtid5.mongodb.net/myF
     }); 
 })
 
-app.use(express.static(path.join(__dirname, 'testapp/build')));
+app.use(express.static(path.join(__dirname, 'todolist-ts/build')));
 
 app.get('/', function (요청, 응답) {
-    응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
+    응답.sendFile(path.join(__dirname, '/todolist-ts/build/index.html'));
 });
 
 
@@ -143,21 +148,6 @@ app.post('/chat', function(req, res){
     })
 });
 
-app.get('/message/:id', function(req, res){
-    res.writeHead(200, {
-        "Connection": "keep-alive",
-        "Content-Type": "text/event-stream",
-        "Cache-Control": "no-cache",
-    });
-    let id = req.params.id
-    id = String(id.substring(1));
-    db.collection('message').find({userid: id}).toArray()
-    .then(result => {
-        res.write('event: test\n');
-        res.write(`data: ${JSON.stringify(result)}\n\n`);
-    })
-});
-
 app.post('/message', function(req, res){
     let data = {
         parent : req.body.parent,
@@ -171,9 +161,11 @@ app.post('/message', function(req, res){
     })
 }); 
 
-
+io.on('connection',() => {
+    console.log('유저 접속완료')
+})
 
 app.get('*', function (요청, 응답) {
-    응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
+    응답.sendFile(path.join(__dirname, '/todolist-ts/build/index.html'));
 });
 

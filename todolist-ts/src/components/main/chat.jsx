@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import store from "../../redux/store";
 import { Chatserv } from "../../service/chat";
+import io from 'socket.io-client';
 
 function Chat({setChatStatus}) {
     const {member} = useSelector(store => store.memberReducer);
@@ -9,6 +10,8 @@ function Chat({setChatStatus}) {
     const [chatList,setChatList] = useState([]);
 
     const elTextarea = useRef(null);
+
+    
 
     const chat = new Chatserv();
 
@@ -26,8 +29,7 @@ function Chat({setChatStatus}) {
             
         })
     }
-
-    let eventSource;
+    let socket;
     useEffect(() => {
         chat.chatServ('post','/chat',{
             userId: member.id,
@@ -40,10 +42,7 @@ function Chat({setChatStatus}) {
             console.log(err);  
         })
 
-        eventSource = new EventSource(`/message/:${member.id}`)
-        eventSource.addEventListener('test', function (e){
-            console.log(e.data);
-        });
+        socket = io();
     },[])
     return (
         <>
