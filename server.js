@@ -135,12 +135,26 @@ app.post('/chat', function(req, res){
             });
         } else {
             let roomId = String(result._id); 
-            
             db.collection('message').find({parent: roomId}).toArray()
             .then(result2 => {
                 res.send([{roomId : roomId},result2]);
             })
         }
+    })
+});
+
+app.get('/message/:id', function(req, res){
+    res.writeHead(200, {
+        "Connection": "keep-alive",
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+    });
+    let id = req.params.id
+    id = String(id.substring(1));
+    db.collection('message').find({userid: id}).toArray()
+    .then(result => {
+        res.write('event: test\n');
+        res.write(`data: ${JSON.stringify(result)}\n\n`);
     })
 });
 
@@ -156,6 +170,8 @@ app.post('/message', function(req, res){
         res.send(result);
     })
 }); 
+
+
 
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));

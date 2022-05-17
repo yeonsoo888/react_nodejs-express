@@ -12,6 +12,6 @@ export class Chatserv {
             method: method,
             url: url,
             data: data
-        })
-    }
+        },this.option);
+    };
 }

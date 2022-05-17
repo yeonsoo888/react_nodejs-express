@@ -3,18 +3,16 @@ import { useSelector } from "react-redux";
 import store from "../../redux/store";
 import { Chatserv } from "../../service/chat";
 
-function Chat() {
+function Chat({setChatStatus}) {
     const {member} = useSelector(store => store.memberReducer);
     const [romNum,setRomNum] = useState(0);
     const [chatList,setChatList] = useState([]);
 
-    console.log(member);
     const elTextarea = useRef(null);
 
     const chat = new Chatserv();
 
     const sendMessage = (e) => {
-        console.log(elTextarea.current.value);
         e.preventDefault();
         chat.chatServ('post','/message',{
             parent : romNum,
@@ -29,6 +27,7 @@ function Chat() {
         })
     }
 
+    let eventSource;
     useEffect(() => {
         chat.chatServ('post','/chat',{
             userId: member.id,
@@ -40,13 +39,18 @@ function Chat() {
         .catch(err => {
             console.log(err);  
         })
+
+        eventSource = new EventSource(`/message/:${member.id}`)
+        eventSource.addEventListener('test', function (e){
+            console.log(e.data);
+        });
     },[])
     return (
         <>
-            <div className="btnChatWrap">
-                <button className="btnChat">CHAT</button>
-            </div>
             <div className="chatWrap">
+                <button className="btn__chatClose" onClick={() => {
+                    setChatStatus(false);
+                }}>닫기</button>
                 <div className="chat__inner">
                     <div className="chat__listWrap">
                         <ul className="chat__list">

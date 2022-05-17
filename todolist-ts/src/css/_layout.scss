@@ -363,11 +363,11 @@ $main-color : #333;
     
 }
 .chatWrap {
-    position: fixed; top: 50%; transform: translate(0,-50%); right: 0; background: #fff; border: 1px solid #ddd; width: 100%; max-width: 500px; height: 400px; overflow: auto;
+    position: fixed; top: 50%; transform: translate(0,-50%); right: 0; background: #fff; border: 1px solid #ddd; width: 100%; max-width: 500px; 
     .chat__inner {
         height: 100%;
         .chat__listWrap {
-            background: #f7e600; height: calc(100% - 100px); padding: 0.6rem;
+            background: #f7e600; max-height: 350px; padding: 0.6rem; overflow: auto;
             .chat__list {
                 li {
                     display: flex;

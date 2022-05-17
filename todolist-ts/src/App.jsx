@@ -74,7 +74,7 @@ function App() {
                     </div>
                     {
                       chatStatus 
-                      ? <Chat />
+                      ? <Chat setChatStatus={setChatStatus} />
                       : <button onClick={() => {setChatStatus(true)}} className='btn__chat'>CHAT</button>
                     }
                   </div>
