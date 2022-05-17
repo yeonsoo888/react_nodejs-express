@@ -11,4 +11,4 @@
  - redux를 이용하여 메인페이지와 board페이지에서 데이터 출력
  - 내가 쓴 글만 따로 모아보기
 
-3. ~~SSE(server sent event)를 이용한 관리자와 채팅기능~~ socket.io를 이용한 관리자와 
+3. ~~SSE(server sent event)를 이용한 관리자와 채팅기능~~ socket.io를 이용한 관리자와 채팅
