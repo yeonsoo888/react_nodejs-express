@@ -6,7 +6,12 @@ import { Chatserv } from "../../service/chat";
 function Chat() {
     const {member} = useSelector(store => store.memberReducer);
     const [romNum,setRomNum] = useState(0);
-    const [chatList,setChatList] = useState([]);
+    const [chatList,setChatList] = useState([
+        {
+            content: null,
+            date: null,
+        }
+    ]);
 
     console.log(member);
     const elTextarea = useRef(null);
@@ -24,9 +29,6 @@ function Chat() {
         .then(response => {
             console.log(response);
         })
-        .catch(err => {
-            
-        })
     }
 
     useEffect(() => {
@@ -34,8 +36,10 @@ function Chat() {
             userId: member.id,
         })
         .then(response => {
-            setRomNum(response.data[0].roomId);
-            setChatList(response.data[1]);
+            if(response.length !== 0) {
+                setRomNum(response.data[0].roomId);
+                setChatList(response.data[1]);
+            }
         })
         .catch(err => {
             console.log(err);  

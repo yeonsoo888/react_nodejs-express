@@ -368,6 +368,7 @@ $main-color : #333;
         height: 100%;
         .chat__listWrap {
             background: #f7e600; height: calc(100% - 100px); padding: 0.6rem;
+            overflow: auto;
             .chat__list {
                 li {
                     display: flex;
@@ -378,7 +379,7 @@ $main-color : #333;
                         strong {
                             
                         }
-                        span {position: absolute; left: 100%;}
+                        span {position: absolute; left: calc(100% + 5px); white-space: nowrap; bottom: 0; font-size: 0.875rem;}
                     }
 
                     &.admin {

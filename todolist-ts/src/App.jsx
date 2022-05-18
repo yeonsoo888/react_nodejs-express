@@ -17,6 +17,7 @@ import jwt_decode from "jwt-decode";
 
 import './css/style.scss';
 import { BoardServ } from './service/board';
+import Chatroom from './components/sub/chatroom';
 
 function App() {
   const [chatStatus,setChatStatus] = useState(false);
@@ -82,12 +83,9 @@ function App() {
             }
         </Route>
       </Switch>
-      <Route path='/youtube'>
-          <Youtube />
-      </Route>
-      <Route path='/board'>
-          <Board />
-      </Route>
+      <Route path='/youtube'><Youtube /></Route>
+      <Route path='/board'><Board /></Route>
+      <Route path='/chatroom'><Chatroom /></Route>
       <Footer />
     </div>
   );

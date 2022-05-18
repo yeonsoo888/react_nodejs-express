@@ -107,9 +107,11 @@ app.post('/login', function(req, res){
         if(result) {
             const mail = result.mail;
             const userId = result._id;
+            const level = result.level;
             const token = jwt.sign({
                 userId,
                 mail,
+                level,
             }, "scretCode", {
                 expiresIn: '1m', // 1분
                 issuer: '토큰발급자',
@@ -122,11 +124,12 @@ app.post('/login', function(req, res){
 });
 
 app.post('/chat', function(req, res){
+    let today = new Date().toLocaleDateString();
     let data = {
         title : `${ObjectId(req.body.userId)} 채팅방`,
         owner: ObjectId(req.body.userId),
         target : ObjectId('6268c6ecc45a69b8d4fe481f'),
-        date : new Date()
+        date : today,
     }
     db.collection('chat').findOne({owner : ObjectId(req.body.userId)},function(err,result) {
         if(!result) {
@@ -145,11 +148,12 @@ app.post('/chat', function(req, res){
 });
 
 app.post('/message', function(req, res){
+    let today = new Date().toLocaleDateString();
     let data = {
         parent : req.body.parent,
         userid : req.body.userid,
         content : req.body.content,
-        date : new Date(),
+        date : today,
     }
     db.collection('message').insertOne(data)
     .then(result => {

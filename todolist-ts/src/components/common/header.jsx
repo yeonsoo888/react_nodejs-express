@@ -19,6 +19,7 @@ function Header() {
                                 <ul className="navList">
                                     <li><Link to='/board'><span>BOARD</span></Link></li>
                                     <li><Link to='/youtube'><span>YOUTUBE</span></Link></li>
+                                    <li><Link to='/chatroom'><span>CHAT ROOM</span></Link></li>
                                 </ul>
                             </nav>
                             <button onClick={() => {
