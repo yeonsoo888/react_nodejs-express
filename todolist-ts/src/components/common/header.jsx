@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from 'react-router-dom';
 function Header() {
-    const currentMember = useSelector(store => store.memberReducer.member);
+    const {member} = useSelector(store => store.memberReducer);
     const dispatch = useDispatch()
     const history = useHistory(); 
     return (
@@ -13,13 +13,17 @@ function Header() {
                         <Link to='/'><span>LOGO</span></Link>
                     </h1>
                     {
-                        currentMember.mail !== undefined &&
+                        member.mail !== undefined &&
                         <>
                             <nav className="nav">
                                 <ul className="navList">
                                     <li><Link to='/board'><span>BOARD</span></Link></li>
                                     <li><Link to='/youtube'><span>YOUTUBE</span></Link></li>
-                                    <li><Link to='/chatroom'><span>CHAT ROOM</span></Link></li>
+                                    {
+                                        member.level === "admin" 
+                                        ? <li><Link to='/chatroom'><span>CHAT ROOM</span></Link></li>
+                                        : null
+                                    }
                                 </ul>
                             </nav>
                             <button onClick={() => {

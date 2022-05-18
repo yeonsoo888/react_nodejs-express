@@ -19,14 +19,17 @@ export default function Login({setIsLogin}) {
 
         member.login('post','/login',{
             mail : mailValue,
-            pw : pwValue
+            pw : pwValue,
         })
         .then((res) => {
             const token = res.data;
             localStorage.setItem("jwtToken",token);
             let userInfo = jwt_decode(token);
-            console.log(userInfo);
-            dispatch({type: "loginMember",payload: {mail:userInfo.mail,id: userInfo.userId}});
+            dispatch({type: "loginMember",payload: {
+                mail:userInfo.mail,
+                id: userInfo.userId,
+                level: userInfo.level,
+            }});
         })
         .catch(err => {
             setConfirmId(true);

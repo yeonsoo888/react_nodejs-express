@@ -40,10 +40,10 @@ MongoClient.connect('mongodb+srv://admin:qwer1234@cluster0.rtid5.mongodb.net/myF
     }); 
 })
 
-app.use(express.static(path.join(__dirname, 'testapp/build')));
+app.use(express.static(path.join(__dirname, 'todolist-ts/build')));
 
 app.get('/', function (요청, 응답) {
-    응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
+    응답.sendFile(path.join(__dirname, '/todolist-ts/build/index.html'));
 });
 
 
@@ -123,6 +123,13 @@ app.post('/login', function(req, res){
     });
 });
 
+app.get('/chatList', function(req, res){
+    db.collection('chat').find().toArray()
+    .then(result => {
+        res.send(result);
+    })
+});
+
 app.post('/chat', function(req, res){
     let today = new Date().toLocaleDateString();
     let data = {
@@ -162,6 +169,6 @@ app.post('/message', function(req, res){
 }); 
 
 app.get('*', function (요청, 응답) {
-    응답.sendFile(path.join(__dirname, '/testapp/build/index.html'));
+    응답.sendFile(path.join(__dirname, '/todolist-ts/build/index.html'));
 });
 
