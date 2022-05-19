@@ -17,12 +17,14 @@ import jwt_decode from "jwt-decode";
 
 import './css/style.scss';
 import { BoardServ } from './service/board';
+import Chatroom from './components/sub/chatroom';
 
 function App() {
   const [chatStatus,setChatStatus] = useState(false);
   const dispatch = useDispatch();
   
   const {member} = useSelector(store => store.memberReducer);
+
   const { board } = useSelector(store => store.boardReducer);
   const boardServ = new BoardServ();
 
@@ -30,11 +32,18 @@ function App() {
     let nowToken = localStorage.getItem("jwtToken");
     if(nowToken == null) return;
     let userInfo = jwt_decode(nowToken);
-    dispatch({type: "loginMember",payload:{mail:userInfo.mail,id:userInfo.userId}})
+    dispatch({type: "loginMember",payload:{
+      mail:userInfo.mail,
+      id:userInfo.userId,
+      level: userInfo.level,
+    }})
     boardServ.fetchBoard('get','/list')
     .then(response => {
         dispatch({type: "setBoard",payload: response.data.reverse()});
     })
+    .catch(err => {
+      console.log(err);
+    });
   },[]);
 
 
@@ -82,12 +91,9 @@ function App() {
             }
         </Route>
       </Switch>
-      <Route path='/youtube'>
-          <Youtube />
-      </Route>
-      <Route path='/board'>
-          <Board />
-      </Route>
+      <Route path='/youtube'><Youtube /></Route>
+      <Route path='/board'><Board /></Route>
+      <Route path='/chatroom'><Chatroom /></Route>
       <Footer />
     </div>
   );

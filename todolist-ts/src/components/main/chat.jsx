@@ -7,7 +7,12 @@ import io from 'socket.io-client';
 function Chat({setChatStatus}) {
     const {member} = useSelector(store => store.memberReducer);
     const [romNum,setRomNum] = useState(0);
-    const [chatList,setChatList] = useState([]);
+    const [chatList,setChatList] = useState([
+        {
+            content: null,
+            date: null,
+        }
+    ]);
 
     const elTextarea = useRef(null);
 
@@ -25,9 +30,6 @@ function Chat({setChatStatus}) {
         .then(response => {
             console.log(response);
         })
-        .catch(err => {
-            
-        })
     }
     let socket;
     useEffect(() => {
@@ -35,8 +37,10 @@ function Chat({setChatStatus}) {
             userId: member.id,
         })
         .then(response => {
-            setRomNum(response.data[0].roomId);
-            setChatList(response.data[1]);
+            if(response.length !== 0) {
+                setRomNum(response.data[0].roomId);
+                setChatList(response.data[1]);
+            }
         })
         .catch(err => {
             console.log(err);  
