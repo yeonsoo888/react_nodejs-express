@@ -158,6 +158,17 @@ app.post('/chat', function(req, res){
     })
 });
 
+app.post('/admChat', (req,res) => {
+    db.collection('chat').findOne({owner : ObjectId(req.body.userId)},function(err,result) {
+        let roomId = String(result._id); 
+        db.collection('message').find({parent: roomId}).toArray()
+        .then(result2 => {
+            res.send([{roomId : roomId},result2]);
+        })
+    })
+});
+
+
 app.post('/message', function(req, res){
     let today = new Date().toLocaleDateString();
     let data = {
@@ -171,6 +182,14 @@ app.post('/message', function(req, res){
         res.send(result);
     })
 }); 
+
+app.post('/member' , (req,res) => {
+    
+    db.collection('member').findOne({_id: ObjectId(req.body.targetId)})
+    .then(result => {
+        res.send(result);
+    })
+})
 
 io.on('connection',() => {
     console.log('유저 접속완료')

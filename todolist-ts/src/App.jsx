@@ -82,9 +82,9 @@ function App() {
                       </ul>
                     </div>
                     {
-                      chatStatus 
+                      chatStatus && member.level !== "admin"
                       ? <Chat setChatStatus={setChatStatus} />
-                      : <button onClick={() => {setChatStatus(true)}} className='btn__chat'>CHAT</button>
+                      : <button onClick={() => {setChatStatus(true)}} className={`btn__chat ${member.level}`}>CHAT</button>
                     }
                   </div>
               )

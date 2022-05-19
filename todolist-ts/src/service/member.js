@@ -14,4 +14,12 @@ export class Member {
             data: data,
         },this.option)
     } 
+    
+    mem = async (method,url,data) => {
+        return await axios({
+            method: method,
+            url: url,
+            data: data,
+        },this.option)
+    } 
 }

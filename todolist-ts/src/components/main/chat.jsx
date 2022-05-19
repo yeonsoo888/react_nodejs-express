@@ -32,6 +32,7 @@ function Chat({setChatStatus}) {
         })
     }
     let socket;
+    
     useEffect(() => {
         chat.chatServ('post','/chat',{
             userId: member.id,
@@ -63,7 +64,7 @@ function Chat({setChatStatus}) {
                                         return (
                                             <li className="onwer" key={idx}>
                                                 <div>
-                                                    <strong>{member.mail}</strong>
+                                                    {/* <strong>{member.mail}</strong> */}
                                                     <p>{item.content}</p>
                                                     <span>{item.date}</span>
                                                 </div>
@@ -73,7 +74,7 @@ function Chat({setChatStatus}) {
                                         return (
                                             <li className="admin" key={idx}>
                                                 <div>
-                                                    <strong>{item.id}</strong>
+                                                    <strong>admin</strong>
                                                     <p>{item.content}</p>
                                                     <span>{item.date}</span>
                                                 </div>
