@@ -33,6 +33,7 @@ export default function ChatView() {
     }
 
     useEffect( () => {
+        console.log("ok");
         chat.chatServ('post','/admChat',{
             userId: parm.id
         })

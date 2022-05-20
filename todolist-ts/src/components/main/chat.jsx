@@ -15,10 +15,8 @@ function Chat({setChatStatus}) {
     ]);
 
     const elTextarea = useRef(null);
-
-    
-
     const chat = new Chatserv();
+    let socket;
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -28,10 +26,18 @@ function Chat({setChatStatus}) {
             content: elTextarea.current.value,
         })
         .then(response => {
-            console.log(response);
+            socket.emit('user-send', {
+                parent : romNum,
+                userid: member.id,
+                content: elTextarea.current.value,
+            });
         })
     }
-    let socket;
+    socket.on('broadcast',function(data) {
+        console.log(data);
+        setChatList([...chatList,data])
+    })
+
     
     useEffect(() => {
         chat.chatServ('post','/chat',{

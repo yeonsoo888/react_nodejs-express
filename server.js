@@ -160,6 +160,7 @@ app.post('/chat', function(req, res){
 
 app.post('/admChat', (req,res) => {
     db.collection('chat').findOne({owner : ObjectId(req.body.userId)},function(err,result) {
+        console.log(result);
         let roomId = String(result._id); 
         db.collection('message').find({parent: roomId}).toArray()
         .then(result2 => {
@@ -183,6 +184,16 @@ app.post('/message', function(req, res){
     })
 }); 
 
+io.on('connection',(socket) => {
+    console.log('유저 접속완료')
+    
+    socket.on('user-send', function(data){
+        console.log(data)
+        io.emit('broadcast',data)
+    });
+})
+
+
 app.post('/member' , (req,res) => {
     
     db.collection('member').findOne({_id: ObjectId(req.body.targetId)})
@@ -191,9 +202,8 @@ app.post('/member' , (req,res) => {
     })
 })
 
-io.on('connection',() => {
-    console.log('유저 접속완료')
-})
+
+
 
 app.get('*', function (요청, 응답) {
     응답.sendFile(path.join(__dirname, '/todolist-ts/build/index.html'));
