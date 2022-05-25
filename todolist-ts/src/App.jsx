@@ -90,10 +90,10 @@ function App() {
               )
             }
         </Route>
+        <Route path='/youtube'><Youtube /></Route>
+        <Route path='/board'><Board /></Route>
+        <Route path='/chatroom'><Chatroom /></Route>
       </Switch>
-      <Route path='/youtube'><Youtube /></Route>
-      <Route path='/board'><Board /></Route>
-      <Route path='/chatroom'><Chatroom /></Route>
       <Footer />
     </div>
   );

@@ -10,7 +10,7 @@ function Header() {
             <header className='header'>
                 <div className="limit">
                     <h1 className="logo">
-                        <Link to='/'><span>LOGO</span></Link>
+                        <Link to='/'><span>HOME</span></Link>
                     </h1>
                     {
                         member.mail !== undefined &&

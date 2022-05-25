@@ -20,20 +20,26 @@ export default function Chatroom() {
     return (
         <div className="subPage">
             <div className="limit">
-                <ul className='chatRomm__list'>
-                {
-                    chatRommList.map( (item , i) => {
-                        return (
-                            <li key={i}>
-                                <Link to={`/chatroom/view/${item.owner}`}><strong>{item.title}</strong></Link>
-                            </li>
-                        )
-                    })
-                }
-                </ul>
-                <Route path="/chatroom/view/:id">
-                    <ChatView  />
-                </Route>
+                <Switch >
+                    <Route exact path='/chatroom'>
+                    <ul className='chatRomm__list'>
+                        {
+                            chatRommList.map( (item , i) => {
+                                return (
+                                    <li key={i}>
+                                        <Link to={`/chatroom/view/${item.owner}`}><strong>{item.title}</strong></Link>
+                                    </li>
+                                )
+                            })
+                        }
+                        </ul>
+                    </Route>
+                    <Route path="/chatroom/view/:id">
+                        <ChatView  />
+                    </Route>
+                </Switch>
+                
+                
             </div>
         </div>
     )

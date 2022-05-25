@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import store from "../../redux/store";
 import { Chatserv } from "../../service/chat";
 import io from 'socket.io-client';
+import socketIOClient from "socket.io-client";
 
 function Chat({setChatStatus}) {
     const {member} = useSelector(store => store.memberReducer);
@@ -16,7 +17,8 @@ function Chat({setChatStatus}) {
 
     const elTextarea = useRef(null);
     const chat = new Chatserv();
-    let socket;
+    const socket = io();
+    // const socket = socketIOClient('localhost:8080');
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -26,18 +28,9 @@ function Chat({setChatStatus}) {
             content: elTextarea.current.value,
         })
         .then(response => {
-            socket.emit('user-send', {
-                parent : romNum,
-                userid: member.id,
-                content: elTextarea.current.value,
-            });
+            
         })
     }
-    socket.on('broadcast',function(data) {
-        console.log(data);
-        setChatList([...chatList,data])
-    })
-
     
     useEffect(() => {
         chat.chatServ('post','/chat',{
@@ -50,11 +43,11 @@ function Chat({setChatStatus}) {
             }
         })
         .catch(err => {
-            console.log(err);  
         })
+        socket.emit('user-send', "안뇽하소");
 
-        socket = io();
     },[])
+    
     return (
         <>
             <div className="chatWrap">

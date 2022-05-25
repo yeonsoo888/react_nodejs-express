@@ -9,7 +9,12 @@ const MongoClient = require('mongodb').MongoClient;
 const http = require('http').createServer(app);
 
 const { Server } = require("socket.io");
-const io = new Server(http);
+const io   = require('socket.io')(http, {
+    cors: {
+        origin: ["http://localhost:3000/"],
+        methods:["GET","POST"],
+    }
+});
 
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -189,7 +194,6 @@ io.on('connection',(socket) => {
     
     socket.on('user-send', function(data){
         console.log(data)
-        io.emit('broadcast',data)
     });
 })
 
